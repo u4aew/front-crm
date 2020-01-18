@@ -1,0 +1,11 @@
+inherit(){
+   $selector = str-replace(selector(), '_[\w-]+(_[\w-]+)?', '')
+   {$selector} {
+      {block}
+   }
+}
+
+b() {
+   $selector = last(split(',', str-replace(selector(), '^[\s]|[\s]$', '')))
+   return str-replace(last(split(' ', $selector)), '[_:][\w-]+(_[\w-]+)?|(?!^)(?![\w-].).+', '')
+}

@@ -1,0 +1,17 @@
+flex-column($size, $columns = 1, $margin = 0) {
+   if ( $size == $columns && $margin == 0 ) {
+      flex-basis 100%
+      max-width none
+   } else {
+      flex-basis unquote('calc('+ ((100/$columns)*$size) +'%'+ ($margin ? ' - '+ (unit($margin, 'px')*2) : '') +')')
+      max-width @flex-basis
+   }
+}
+
+flex-column-width($size, $columns = 1, $margin = 0) {
+   if ( $size == $columns && $margin == 0 ) {
+      return 100%
+   } else {
+      return unquote('calc('+ ((100/$columns)*$size) +'%'+ ($margin ? ' - '+ (unit($margin, 'px')*2) : '') +')')
+   }
+}

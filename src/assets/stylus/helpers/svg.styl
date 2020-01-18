@@ -1,0 +1,62 @@
+svg(name, size = 16px, color = #fff, targetColor = '%23xxx') {
+   $image = $svg[name]
+
+   if ( $image ) {
+      $width = convert(''+size+'')
+      $height = unit(round(($width * $image['height']) / $image['width']), 'px')
+
+      $bg = str-replace($image['icon'], targetColor, str-replace(color, '#', '%23'))
+      _cache = '$svg_bg-'+name+'--'+str-replace(color, '#', '')
+
+      width $width
+      height $height
+
+      if ( called-from != 'do' ) {
+         +cache(_cache) {
+            background url('data:image/svg+xml;charset=utf-8,'$bg) 0 0 no-repeat
+            background-size 100% 100%
+         }
+      }
+      else {
+         background url('data:image/svg+xml;charset=utf-8,'$bg) 0 0 no-repeat
+         background-size 100% 100%
+      }
+
+   } else {
+      error('\n\n\n Нету такого svg `'+name+'` \n\n')
+   }
+}
+
+svg-color(name, color = #fff, targetColor = '%23xxx', force = false) {
+   $image = $svg[name]
+
+   if ( $image ) {
+      $bg = str-replace($image['icon'], targetColor, str-replace(color, '#', '%23'))
+      _cache = '$svg_bg-'+name+'--'+str-replace(color, '#', '')
+
+      if ( !force || (called-from != 'do' && !force) ) {
+         +cache(_cache) {
+            background-image url('data:image/svg+xml;charset=utf-8,'$bg)
+         }
+      }
+      else {
+         background-image url('data:image/svg+xml;charset=utf-8,'$bg)
+      }
+
+   } else {
+      error('\n\n\n Нету такого svg `'+name+'` \n\n')
+   }
+}
+
+svg-size(name, size = 16px) {
+   $image = $svg[name]
+   if ( $image ) {
+      $width = convert(''+size+'')
+      $height = unit(round(($width * $image['height']) / $image['width']), 'px')
+
+      width $width
+      height $height
+   } else {
+      error('\n\n\n Нету такого svg `'+name+'` \n\n')
+   }
+}

@@ -1,0 +1,113 @@
+.cols {
+  &__list {
+    display flex
+    flex-wrap wrap
+    margin-right -10px
+    margin-left -10px
+    margin-bottom -10px
+    margin-top -10px
+    max-width 100%
+  }
+}
+
+.cols.space-between {
+  .cols {
+    &__list {
+      justify-content space-between
+    }
+  }
+}
+
+.cols.space-around {
+  .cols {
+    &__list {
+      justify-content space-around
+    }
+  }
+}
+
+.cols.flex-end {
+  .cols {
+    &__list {
+      justify-content flex-end
+    }
+  }
+}
+
+.cols.flex-start {
+  .cols {
+    &__list {
+      justify-content flex-start
+    }
+  }
+}
+
+.cols.ai-flex-end {
+  .cols {
+    &__list {
+      align-items flex-end
+    }
+  }
+}
+
+.cols.ai-flex-start {
+  .cols {
+    &__list {
+      align-items flex-start
+    }
+  }
+}
+
+.cols.ai-center {
+  .cols {
+    &__list {
+      align-items center
+    }
+  }
+}
+.cols.offset-none {
+  .cols {
+    &__list {
+      margin-left 0
+      margin-right 0
+    }
+  }
+}
+.cols.delimiter {
+  .cols {
+    &__list {
+      margin-left -15px
+      margin-right -15px
+    }
+  }
+  .cols-item {
+    margin-left 15px
+    margin-right 15px
+    position relative
+    &:before {
+      content ''
+      display block
+      position absolute
+      top 50%
+      transform translateY(-50%)
+      width 1px
+      height 30px
+      right  -15px
+      background-color $color-1
+    }
+    &:last-child {
+      &:before {
+        display none
+      }
+    }
+  }
+}
+
+.cols-item {
+  margin-right 10px
+  margin-left 10px
+  margin-bottom 10px
+  margin-top 10px
+  flex 0 0 auto
+  max-width 100%
+}

@@ -1,0 +1,9 @@
+grid-width($size, $width = $grid-width, $gap = $grid-gap) {
+   return round($width * $size + $gap * ($size - 1))
+}
+
+grid-width-relative($size, $columns = 12, $gap = $grid-gap) {
+   $gap = no-unit($gap)
+   return unquote('calc('+ ((100/$columns)*$size) +'%'+ ($gap ? ' - '+ unit(($gap/($columns - 1)*($columns - $size)), 'px') : '') +')')
+   return unquote('calc('+ ((100/$columns)*$size) +'%'+ ($gap ? ' - '+ unit(($gap/($size + 1) + $gap/$size), 'px') : '') +')')
+}

@@ -1,0 +1,63 @@
+.form-base {
+  box-sizing border-box
+
+  &__side {
+    padding 20px
+  }
+
+  &__field {
+    margin-bottom 15px
+
+    &_delimiter-bottom {
+      padding-bottom 15px
+      box-sizing border-box
+      border-bottom 1px solid $color-7-200
+    }
+
+    &:last-child {
+      margin-bottom 0
+    }
+  }
+
+  &__main {
+    padding 25px 25px 30px 25px
+
+  }
+
+  &__side {
+    box-sizing border-box
+    border-top 1px solid $color-7-400
+    padding 30px 25px 30px 25px
+  }
+
+  &__actions {
+    &-list {
+      display flex
+      align-items center
+      margin-right -10px
+      margin-left -10px
+    }
+
+    &-side {
+      margin-right 10px
+      margin-left 10px
+    }
+
+    &-main {
+      margin-right 10px
+      margin-left 10px
+    }
+  }
+}
+
+.form-base.registration {
+  min-height 540px
+  display flex
+  flex-direction column
+
+  .form-base {
+    &__side {
+      margin-top auto
+    }
+  }
+}

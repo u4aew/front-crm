@@ -1,0 +1,13 @@
+hover() {
+    :root:not(.device-touch) &:hover,
+    :root:not(.device-touch) &:active,
+    &:active {
+        {block}
+    }
+}
+active() {
+    :root:not(.device-touch) &:active,
+    &:active {
+        {block}
+    }
+}

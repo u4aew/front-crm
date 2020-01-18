@@ -1,0 +1,101 @@
+$paragraph,
+table,
+blockquote,
+ol,
+ul,
+p {
+  margin-bottom $margin-paragraph
+
+  &:last-child {
+    margin-bottom 0
+  }
+}
+
+img {
+  max-width 100%
+}
+
+i, em {
+  font-style italic
+}
+
+b, strong {
+  font-weight 500
+}
+
+.link,
+a {
+  text-decoration none
+  cursor pointer
+
+  &:hover {
+  }
+
+  &:active, &.is-active {
+  }
+}
+
+.link.link_color-7-800 {
+  color $color-7-800
+
+  &:hover {
+    color darken($color-7-800, 20%)
+  }
+
+  &:active {
+    color darken($color-7-800, 30%)
+  }
+}
+
+a[href^='tel:']:not([class]) {
+  border-bottom-width 0
+  color inherit
+  white-space nowrap
+  text-decoration none
+}
+
+
+ol {
+  counter-reset nums
+  list-style none
+
+  li {
+    counter-increment nums
+    list-style-type none
+    position relative
+    margin-bottom 25px
+    padding-left 35px
+
+    &::before {
+      content counter(nums) '.'
+      position absolute
+      left 0
+    }
+
+    &:last-child {
+      margin-bottom 0
+    }
+  }
+}
+
+
+ul {
+  li {
+    position relative
+    margin-bottom 25px
+    padding-left 25px
+
+    &::before {
+      content ''
+      display block
+      position absolute
+      left 0
+      top 5px
+      size 7px
+    }
+
+    &:last-child {
+      margin-bottom 0
+    }
+  }
+}

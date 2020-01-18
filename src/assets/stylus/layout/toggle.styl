@@ -1,0 +1,68 @@
+.toggle {
+  user-select none
+  cursor pointer
+  display block
+  position relative
+  padding-left (20px + 13px)
+
+  &__input {
+    display none
+  }
+
+  &__fake {
+    box-sizing border-box
+    transition $transition-fast
+    position absolute
+    left 0
+    size 20px
+    border 1px solid $color-7
+    border-radius 2px
+    background $color-1
+
+    &::before {
+      content ''
+      transition $transition-fast
+      opacity 0
+      position absolute
+    }
+
+    ^[0]__input:checked ~ & {
+      border-color $color-primary
+
+      &::before {
+        opacity 1
+      }
+    }
+
+    [type="checkbox"] ~ & {
+      &::before {
+        svg('check', 11px, $color-1)
+        align-center()
+      }
+    }
+
+    [type="checkbox"]:checked ~ & {
+      border-color $color-primary
+      background $color-primary
+    }
+
+    [type="radio"] ~ & {
+      border-radius 50%
+
+      &::before {
+        border-radius 50%
+        trbl 4px
+        background $color-primary
+      }
+    }
+  }
+
+  &__title {
+  }
+
+  &:hover {
+    & ^[0]__fake {
+      border-color $color-primary
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.profile {
+  flex 1
+  display flex
+  background $color-7-100
+  padding-left 70px
+
+  &__main {
+    flex 1
+    box-sizing border-box
+    padding 30px
+  }
+
+  &__side {
+    width 300px
+    box-sizing border-box
+    position fixed
+    height 100vh
+    background-color $color-1
+    box-shadow 0 5px 25px rgba($color-2, 0.05)
+    transform translateX(-230px)
+    left 0
+    transition $transition-medium
+    overflow-y auto
+    will-change transform
+    z-index 360
+    &:hover {
+      transform translateX(0)
+    }
+  }
+}

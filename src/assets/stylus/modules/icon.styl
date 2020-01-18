@@ -1,0 +1,38 @@
+.icon {
+  display inline-flex
+
+  &:before {
+    content ''
+    display block
+  }
+}
+
+.icon_arrow-right_white {
+  &:before {
+    svg('arrow-right', 15px, white)
+  }
+}
+
+.icon_loader-three-dots {
+  &:before {
+    svg('loader-three-dots', 50px, $color-primary)
+  }
+}
+
+.icon_status-success {
+  &:before {
+    svg('status-success', 50px, $color-success)
+  }
+}
+
+.icon_status-error {
+  &:before {
+    svg('status-error', 60px, $color-error)
+  }
+}
+
+.icon_calendar_white {
+  &:before {
+    svg('calendar', 14px, white)
+  }
+}

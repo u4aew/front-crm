@@ -1,0 +1,24 @@
+.navigation {
+  &__list {
+    display flex
+    flex-wrap wrap
+    margin-right -10px
+    margin-left -10px
+  }
+}
+.navigation-item {
+  flex 0 0 auto
+  margin-right 10px
+  margin-left 10px
+  color $color-7-700
+  use-size(36)
+  cursor pointer
+  font-weight 600
+  &.is-active,
+  &:hover {
+    color $color-primary
+  }
+  &.is-active {
+    pointer-events none
+  }
+}

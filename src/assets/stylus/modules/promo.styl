@@ -1,0 +1,105 @@
+.promo {
+  flex 1
+  display flex
+  flex-direction column
+  background-image url("~@/assets/images/promo/main.jpg")
+  background-position center
+  background-repeat no-repeat
+  background-size cover
+  background-attachment fixed
+  &__footer,
+  &__header {
+    flex 0 0 auto
+  }
+
+  &__main {
+    flex-grow 1
+  }
+}
+
+.promo.recovery {
+  background-image url("~@/assets/images/promo/recovery.png")
+}
+
+.promo-header {
+  padding-top 40px
+  margin-bottom 10px
+
+  &__content {
+    display flex
+  }
+
+  &__logo {
+    transition .3s ease
+    display block
+    min-height 55px
+
+    &:hover {
+      opacity 0.8
+    }
+  }
+}
+
+.promo-main {
+  &__greeting {
+    padding-top 30px
+  }
+
+  &__title {
+    max-width 490px
+    margin-bottom 40px
+
+  }
+
+  &__desc {
+    max-width 266px
+    font-size 14px
+    line-height (20 / 14)
+  }
+
+  &__cols {
+    display flex
+    flex-wrap wrap
+    margin-left -15px
+    margin-right -15px
+
+    &-item {
+      margin-right 15px
+      margin-left 15px
+
+      &_side {
+        flex 0 0 auto
+        width 330px
+      }
+
+      &_main {
+        flex 1
+      }
+    }
+  }
+}
+
+.promo-footer {
+  padding-bottom 40px
+  padding-top 20px
+  box-sizing border-box
+
+  &__content {
+    display flex
+    flex-wrap wrap
+    margin-left -5px
+    margin-right -5px
+
+    &-side {
+      margin-right 5px
+      margin-left 5px
+      flex 0 0 auto
+    }
+
+    &-main {
+      margin-right 5px
+      margin-left 5px
+      flex 1
+    }
+  }
+}

@@ -1,0 +1,51 @@
+.modal-side {
+  position fixed
+  trbl 0
+  z-index 1000
+  display flex
+
+  &__overlay {
+    position absolute
+    z-index 10
+    trbl 0
+    background-color rgba(#000, .5)
+  }
+
+  &__wrapper {
+    flex 1 1 100%
+    z-index 20
+    position relative
+    display flex
+    justify-content flex-end
+  }
+
+  &__inner {
+    display flex
+    flex-direction column
+    overflow-y scroll
+  }
+}
+
+.modal-side-enter-active, .modal-side-leave-active {
+  .modal-side {
+    &__overlay {
+      transition: $transition-medium
+    }
+    &__inner {
+      transition: $transition-medium
+    }
+  }
+}
+
+.modal-side-enter, .modal-side-leave-to {
+  .modal-side {
+    &__overlay {
+      opacity: 0;
+    }
+    &__inner {
+      transform translateX(100%)
+    }
+  }
+}
+
+

@@ -1,0 +1,397 @@
+.menu-list {
+  padding-top 30px
+  padding-left 25px
+  padding-right 25px
+  padding-bottom 30px
+
+  &__header {
+    min-height 40px
+    display flex
+    align-items center
+  }
+
+  &__main {
+    margin-bottom 75px
+  }
+
+  &__footer {
+  }
+
+  &__header {
+    margin-bottom 55px
+  }
+
+  &__logo-small {
+    display flex
+    justify-content flex-end
+    position relative
+
+    &:before {
+      content ''
+      display block
+      svg('logo-small', 20px)
+    }
+  }
+
+  &__avatar {
+    box-sizing border-box
+    padding-left 30px
+    position relative
+    cursor pointer
+
+    &-img {
+      size 40px
+      background-position center
+      background-repeat no-repeat
+      background-size contain
+
+      &.is-fallback {
+        background-image url("~@/assets/images/ui/user.svg") !important
+      }
+    }
+
+    &:before {
+      content ''
+      display block
+      position absolute
+      top 50%
+      transform translateY(-50%)
+      left 0
+      svg('arrow-right', 18px, $color-7-650)
+      transition $transition-main
+    }
+
+    &:hover {
+      &:before {
+        transform translateY(-50%) translateX(3px)
+      }
+    }
+  }
+
+  &__logo-large {
+    flex 1
+    display flex
+    position relative
+    margin-right 24px
+
+    &:before {
+      content ''
+      display block
+      svg('logo-title', 135px)
+    }
+  }
+
+  &__info-preview {
+    flex 1
+  }
+
+  &__info-full {
+    display none
+    justify-content flex-start
+    align-items center
+    flex 1
+  }
+
+  &:hover {
+    .menu-item.delimiter-bottom {
+      &:before {
+        width 100%
+      }
+    }
+
+    .menu-list {
+      &__info-preview {
+        display none
+      }
+
+      &__info-full {
+        display flex
+      }
+    }
+  }
+}
+
+.menu-item {
+  cursor pointer
+  position relative
+  box-sizing border-box
+  padding-bottom 30px
+  font-weight 500
+  display flex
+  align-items center
+  use-size(16)
+  color $color-7-850
+
+  &__icon {
+    flex 0 0 auto
+
+    &:before {
+      content ''
+      display block
+    }
+  }
+
+  &__caption {
+    flex 1
+    min-height 25px
+    margin-right 15px
+    display flex
+    align-items center
+  }
+
+  &.active,
+  &:hover {
+    color $color-primary
+  }
+
+  &:last-child {
+    padding-bottom 0
+  }
+}
+
+.menu-item.is-active {
+  color $color-primary
+  pointer-events none
+  .menu-item {
+
+  }
+}
+
+.menu-item.delimiter-bottom {
+  margin-bottom 30px
+  box-sizing border-box
+  position relative
+
+  &:before {
+    content ''
+    position absolute
+    display block
+    width 17px
+    height 1px
+    background $color-7-300
+    bottom 0
+    right 0
+    transition $transition-medium
+  }
+}
+
+.menu-item.monitor {
+  .menu-item {
+    &__icon {
+      &:before {
+        svg('menu-monitor', 24px, $color-7-650)
+      }
+    }
+  }
+  &.is-active,
+  &:hover {
+    .menu-item {
+      &__icon {
+        &:before {
+          svg-color('menu-monitor', $color-primary)
+        }
+      }
+    }
+  }
+}
+
+.menu-item.products {
+  .menu-item {
+    &__icon {
+      &:before {
+        svg('menu-products', 24px, $color-7-650)
+      }
+    }
+  }
+  &.is-active,
+  &:hover {
+    .menu-item {
+      &__icon {
+        &:before {
+          svg-color('menu-products', $color-primary)
+        }
+      }
+    }
+  }
+}
+
+.menu-item.accounts {
+  .menu-item {
+    &__icon {
+      &:before {
+        svg('menu-accounts', 24px, $color-7-650)
+      }
+    }
+  }
+  &.is-active,
+  &:hover {
+    .menu-item {
+      &__icon {
+        &:before {
+          svg-color('menu-accounts', $color-primary)
+        }
+      }
+    }
+  }
+}
+
+.menu-item.deals {
+  .menu-item {
+    &__icon {
+      &:before {
+        svg('menu-deals', 20px, $color-7-650)
+      }
+    }
+  }
+  &.is-active,
+  &:hover {
+    .menu-item {
+      &__icon {
+        &:before {
+          svg-color('menu-deals', $color-primary)
+        }
+      }
+    }
+  }
+}
+
+.menu-item.cabinet {
+  .menu-item {
+    &__icon {
+      &:before {
+        svg('menu-cabinet', 24px, $color-7-650)
+      }
+    }
+  }
+  &.is-active,
+  &:hover {
+    .menu-item {
+      &__icon {
+        &:before {
+          svg-color('menu-cabinet', $color-primary)
+        }
+      }
+    }
+  }
+}
+
+.menu-item.propaganda {
+  .menu-item {
+    &__icon {
+      &:before {
+        svg('menu-propaganda', 24px, $color-7-650)
+      }
+    }
+  }
+  &.is-active,
+  &:hover {
+    .menu-item {
+      &__icon {
+        &:before {
+          svg-color('menu-propaganda', $color-primary)
+        }
+      }
+    }
+  }
+}
+
+.menu-item.rules {
+  .menu-item {
+    &__icon {
+      &:before {
+        svg('menu-rules', 24px, $color-7-650)
+      }
+    }
+  }
+  &.is-active,
+  &:hover {
+    .menu-item {
+      &__icon {
+        &:before {
+          svg-color('menu-rules', $color-primary)
+        }
+      }
+    }
+  }
+}
+
+.menu-item.settings {
+  .menu-item {
+    &__icon {
+      &:before {
+        svg('menu-settings', 24px, $color-7-650)
+      }
+    }
+  }
+  &.is-active,
+  &:hover {
+    .menu-item {
+      &__icon {
+        &:before {
+          svg-color('menu-settings', $color-primary)
+        }
+      }
+    }
+  }
+}
+
+.menu-item.notify {
+  .menu-item {
+    &__icon {
+      &:before {
+        svg('menu-notify', 22px, $color-7-650)
+      }
+    }
+  }
+  &.is-active,
+  &:hover {
+    .menu-item {
+      &__icon {
+        &:before {
+          svg-color('menu-notify', $color-primary)
+        }
+      }
+    }
+  }
+}
+
+.menu-item.learn {
+  .menu-item {
+    &__icon {
+      &:before {
+        svg('menu-learn', 20px, $color-7-650)
+      }
+    }
+  }
+  &.is-active,
+  &:hover {
+    .menu-item {
+      &__icon {
+        &:before {
+          svg-color('menu-learn', $color-primary)
+        }
+      }
+    }
+  }
+}
+
+.menu-item.balance {
+  .menu-item {
+    &__icon {
+      &:before {
+        svg('menu-balance', 20px, $color-7-650)
+      }
+    }
+  }
+  &.is-active,
+  &:hover {
+    .menu-item {
+      &__icon {
+        &:before {
+          svg-color('menu-balance', $color-primary)
+        }
+      }
+    }
+  }
+}
+

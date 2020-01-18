@@ -1,0 +1,100 @@
+.card-product {
+  box-sizing border-box
+  width 290px
+  border-radius 10px
+  box-shadow 0 8px 18px rgba($color-2-300, 0.22)
+  position relative
+  color white
+  display flex
+  cursor pointer
+  transition box-shadow $transition-main
+  use-size(18)
+  font-weight 500
+  background-position center
+  background-repeat no-repeat
+  background-size cover
+  flex 1
+  &:before {
+    content ''
+    display block
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
+    background-color rgba($color-2-300, 0.6)
+    border-radius 10px
+    transition background-color $transition-main
+  }
+  &__wrapper {
+    flex 1
+    display flex
+    flex-direction column
+    position relative
+    z-index 15
+    padding 20px 20px 20px 20px
+    box-sizing border-box
+    min-height 180px
+  }
+  &__main {
+    margin-top auto
+  }
+  &__side {
+    margin-bottom 15px
+  }
+  &__action {
+    position absolute
+    bottom 0
+    left 0
+    right 0
+    box-sizing border-box
+    transform translateY(calc(100% - 10px))
+    padding 20px
+    background-color $color-1
+    border-radius 0 0 10px 10px
+    opacity 0
+    z-index 99
+    will-change opacity
+    visibility hidden
+  }
+  &:hover {
+    box-shadow 0 16px 32px rgba($color-2-300, 0.32)
+    &:before {
+      background-color rgba($color-primary, 0.85)
+    }
+    .card-product {
+      &__action {
+        opacity 1
+        visibility visible
+      }
+    }
+}
+  &:active {
+    box-shadow 0 4px 10px rgba($color-2-300, 0.08)
+    &:before {
+      background-color rgba($color-primary, 0.9)
+    }
+  }
+}
+.card-product.is-loading {
+  background-color $color-7-650
+  pointer-events none
+  &:before {
+    background-color rgba($color-1,0)
+    display: block;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .25), transparent);
+    animation: skeleton-loading 1.5s infinite alternate-reverse;
+  }
+}
+
+
+@keyframes skeleton-loading {
+  100% {
+    transform: translateX(100%);
+  }
+}

@@ -1,0 +1,29 @@
+align-center(shift = 0, transform = false) {
+   if(!shift[1]) {
+      shift = (shift shift)
+   }
+   top 50%
+   left 50%
+   if ( transform ) {
+      transform translate(-50%, -50%)
+   } else {
+      margin-top (@height/-2) + shift[1]
+      margin-left (@width/-2) + shift[0]
+   }
+}
+align-center-x(shift = 0, transform = false) {
+   left 50%
+   if ( transform ) {
+      transform translateX(-50%)
+   } else {
+      margin-left (@width/-2) + shift
+   }
+}
+align-center-y(shift = 0, transform = false) {
+   top 50%
+   if ( transform ) {
+      transform translateY(-50%)
+   } else {
+      margin-top (@height/-2) + shift
+   }
+}

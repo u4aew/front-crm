@@ -1,0 +1,56 @@
+set-offset(min, max, step, scale = 1) {
+  _maxIteration = (max / step)
+  _minIteration = (min / step)
+
+  for num in _minIteration.._maxIteration {
+    _gapIteration = (num * step)
+    _gap = (_gapIteration * scale)
+    _gapPx = unit(_gap, 'px')
+
+    .l-mb-{_gapIteration} {
+      margin-bottom _gapPx
+    }
+    .l-mt-{_gapIteration} {
+      margin-top _gapPx
+    }
+    .l-mv-{_gapIteration} {
+      margin-top _gapPx
+      margin-bottom _gapPx
+    }
+    .l-ml-{_gapIteration} {
+      margin-left _gapPx
+    }
+    .l-mr-{_gapIteration} {
+      margin-right _gapPx
+    }
+    .l-mh-{_gapIteration} {
+      margin-left _gapPx
+      margin-right _gapPx
+    }
+
+
+    .l-pb-{_gapIteration} {
+      padding-bottom _gapPx
+    }
+    .l-pt-{_gapIteration} {
+      padding-top _gapPx
+    }
+    .l-pv-{_gapIteration} {
+      padding-top _gapPx
+      padding-bottom _gapPx
+    }
+    .l-pl-{_gapIteration} {
+      padding-left _gapPx
+    }
+    .l-pr-{_gapIteration} {
+      padding-right _gapPx
+    }
+    .l-ph-{_gapIteration} {
+      padding-left _gapPx
+      padding-right _gapPx
+    }
+    .l-p-{_gapIteration} {
+      padding _gapPx
+    }
+  }
+}
