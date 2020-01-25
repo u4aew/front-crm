@@ -27,7 +27,9 @@ export default {
     },
     submit () {
       const formData = new FormData(this.$refs.form)
-      formData.append('parentId', this.parentCategory.id)
+      if (this.parentCategory.id) {
+        formData.append('parentId', this.parentCategory.id)
+      }
       if (this.edit) {
         this.update(formData)
       } else {
