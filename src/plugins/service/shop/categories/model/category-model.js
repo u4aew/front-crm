@@ -1,24 +1,15 @@
+import ItemBaseExtendedModel from '@/plugins/service/shop/base/model/item-base-extended-model'
+
 import Helper from '@/core/utils/helper'
 
-class CategoryModel {
-  constructor ({ id, name }) {
-    if (!Helper.isDefined(id)) {
-      throw new Error('id is undefined')
-    }
-    if (!Helper.isDefined(name)) {
-      throw new Error('name is undefined')
-    }
-
-    this.id = id
-    this.name = name
+class CategoryModel extends ItemBaseExtendedModel {
+  constructor (data) {
+    super(data)
+    this.parentId = Helper.getValue(data.parentId)
   }
 
-  getId () {
-    return this.id
-  }
-
-  getName () {
-    return this.name
+  getParentId () {
+    return this.parentId
   }
 }
 

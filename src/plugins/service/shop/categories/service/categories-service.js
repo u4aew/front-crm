@@ -1,5 +1,5 @@
 import ItemsBaseModel from '@/plugins/service/shop/base/model/items-base-model'
-import ItemBaseExtendedModel from '@/plugins/service/shop/base/model/item-base-extended-model'
+import CategoryModel from '@/plugins/service/shop/categories/model/category-model'
 
 class CategoriesService {
   constructor (notify, pageManager, api) {
@@ -25,7 +25,7 @@ class CategoriesService {
     return new Promise((resolve, reject) => {
       this.$api.getCategory(id)
         .then(({ data }) => {
-          resolve(new ItemBaseExtendedModel(data))
+          resolve(new CategoryModel(data))
         })
         .catch((e) => {
           reject(e)

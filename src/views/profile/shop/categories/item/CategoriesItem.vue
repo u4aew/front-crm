@@ -72,7 +72,15 @@
             <v-container>
               <v-row>
                 <v-col cols="6">
-                  Свойства категории
+                  <v-select
+                    v-model="parentCategory"
+                    :items="categories"
+                    item-text="name"
+                    item-value="id"
+                    label="Родительская категория"
+                    return-object
+                    single-line
+                  ></v-select>
                 </v-col>
               </v-row>
             </v-container>

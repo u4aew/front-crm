@@ -2,9 +2,16 @@ import BaseContentItem from '@/views/base/content/base-content-item'
 
 export default {
   mixins: [BaseContentItem],
+  data () {
+    return {
+      parentCategory: {
+        id: null, name: 'Не выбрано'
+      },
+      categories: [{ id: null, name: 'Не выбрано' }]
+    }
+  },
   methods: {
-    update () {
-      const formData = new FormData(this.$refs.form)
+    update (formData) {
       formData.append('id', this.id)
 
       // todo Возможно нужно пересмотреть реализацию
@@ -15,22 +22,30 @@ export default {
       }
       this.$shop.categories.updateCategory(formData)
     },
-    save () {
-      const formData = new FormData(this.$refs.form)
+    save (formData) {
       this.$shop.categories.createCategory(formData)
     },
     submit () {
+      const formData = new FormData(this.$refs.form)
+      formData.append('parentId', this.parentCategory.id)
       if (this.edit) {
-        this.update()
+        this.update(formData)
       } else {
-        this.save()
+        this.save(formData)
       }
     }
   },
   async beforeMount () {
     if (this.edit) {
-      const model = await this.$shop.categories.getCategory(this.$route.params.id)
-      this.setData(model)
+      const categoryModel = await this.$shop.categories.getCategory(this.$route.params.id)
+      this.setData(categoryModel)
+      this.parentCategory = { id: categoryModel.getParentId(), name: categoryModel.getName() }
     }
+    const categoriesModel = await this.$shop.categories.getCategories()
+    categoriesModel.getItems().forEach((item) => {
+      if (item.getId() !== this.id) {
+        this.categories.push({ id: item.getId(), name: item.getName() })
+      }
+    })
   }
 }
