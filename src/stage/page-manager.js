@@ -4,23 +4,8 @@ import { VIEWS } from '@/views/names'
 export default {
   install (Vue, router) {
     Vue.prototype.$pageManager = {
-      showMarket () {
-        toPage(VIEWS.profile.products.market.index.name)
-      },
-      showAuth () {
-        toPage(VIEWS.security.auth.name)
-      },
-      showRegistration () {
-        toPage(VIEWS.security.registration.name)
-      },
-      showRegistrationConfirm () {
-        toPage(VIEWS.security.registrationConfirm.name)
-      },
-      showRecovery () {
-        toPage(VIEWS.security.recovery.name)
-      },
-      showRecoveryConfirm () {
-        toPage(VIEWS.security.recoveryConfirm.name)
+      showShopCategories () {
+        toPage(VIEWS.profile.categories.index.name)
       }
     }
 

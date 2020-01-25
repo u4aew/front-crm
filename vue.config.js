@@ -1,8 +1,10 @@
+const path = require('path')
+
 module.exports = {
   'configureWebpack': {
     'resolve': {
       'alias': {
-        '@': '/Users/macbookpro/Projects/front-crm.loc/src'
+        '@': path.resolve(__dirname, 'src')
       }
     }
   },

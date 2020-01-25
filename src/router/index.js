@@ -9,6 +9,8 @@ import Profile from '@/views/profile/Profile'
 
 // Shop
 import Categories from '@/views/profile/shop/categories/Categories'
+import CategoriesItem from '@/views/profile/shop/categories/item/CategoriesItem'
+
 import Products from '@/views/profile/shop/products/Products'
 import Brands from '@/views/profile/shop/brands/Brands'
 
@@ -35,7 +37,18 @@ const router = new Router({
           name: VIEWS.profile.categories.index.name
         },
         {
-          path: 'Brands',
+          path: 'categories/create/',
+          component: CategoriesItem,
+          name: VIEWS.profile.categories.create.name
+        },
+        {
+          path: 'categories/:id',
+          component: CategoriesItem,
+          name: VIEWS.profile.categories.edit.name,
+          props: { edit: true }
+        },
+        {
+          path: 'brands',
           component: Brands,
           name: VIEWS.profile.brands.index.name
         }
