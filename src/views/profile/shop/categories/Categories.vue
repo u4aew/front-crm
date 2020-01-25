@@ -1,18 +1,18 @@
 <template>
-  <v-container v-if="items" fluid>
+  <v-container fluid>
     <v-row>
       <v-col cols="12" sm="12" md="12" class="text-right">
         <v-btn to="/categories/create" color="primary" dark class="mb-2">Добавить</v-btn>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row v-if="items.length">
       <v-col cols="12" sm="12" md="12">
         <v-data-table
           :headers="headers"
-          :items="items.getItems()"
+          :items="items"
           class="elevation-1">
           <template v-slot:item.action="{ item }">
-            <router-link :to="`/categories/${item.getId()}`">
+            <router-link style="text-decoration: none" :to="`/categories/${item.getId()}`">
               <v-icon
                 small
                 class="mr-2">
@@ -31,15 +31,19 @@
         </v-data-table>
       </v-col>
     </v-row>
+    <v-row v-else>
+      <v-col class="text-center">
+        Данные отсутствуют
+      </v-col>
+    </v-row>
   </v-container>
-
 </template>
 
 <script>
     import CategoriesController from './categories-controller'
 
     export default {
-        mixins: [CategoriesController],
-        name: 'Categories'
+        name: 'Categories',
+        mixins: [CategoriesController]
     }
 </script>

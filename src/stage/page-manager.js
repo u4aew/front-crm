@@ -6,6 +6,9 @@ export default {
     Vue.prototype.$pageManager = {
       showShopCategories () {
         toPage(VIEWS.profile.categories.index.name)
+      },
+      showShopBrands () {
+        toPage(VIEWS.profile.brands.index.name)
       }
     }
 

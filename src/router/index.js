@@ -11,8 +11,10 @@ import Profile from '@/views/profile/Profile'
 import Categories from '@/views/profile/shop/categories/Categories'
 import CategoriesItem from '@/views/profile/shop/categories/item/CategoriesItem'
 
-import Products from '@/views/profile/shop/products/Products'
 import Brands from '@/views/profile/shop/brands/Brands'
+import BrandsItem from '@/views/profile/shop/brands/item/BrandsItem'
+
+import Products from '@/views/profile/shop/products/Products'
 
 // system
 import NotFound from '@/views/errors/not-found'
@@ -51,6 +53,17 @@ const router = new Router({
           path: 'brands',
           component: Brands,
           name: VIEWS.profile.brands.index.name
+        },
+        {
+          path: 'brands/create/',
+          component: BrandsItem,
+          name: VIEWS.profile.brands.create.name
+        },
+        {
+          path: 'brands/:id',
+          component: BrandsItem,
+          name: VIEWS.profile.brands.edit.name,
+          props: { edit: true }
         }
       ]
     },

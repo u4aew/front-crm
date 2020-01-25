@@ -5,7 +5,6 @@
       <v-col>
         <v-tabs class="pa-2">
           <v-tab>Базовая информация</v-tab>
-          <v-tab>Свойства категории</v-tab>
           <v-tab>SEO</v-tab>
           <v-tab-item>
             <v-container>
@@ -70,23 +69,6 @@
           </v-tab-item>
           <v-tab-item>
             <v-container>
-              <v-row>
-                <v-col cols="6">
-                  <v-select
-                    v-model="parentCategory"
-                    :items="categories"
-                    item-text="name"
-                    item-value="id"
-                    label="Родительская категория"
-                    return-object
-                    single-line
-                  ></v-select>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-tab-item>
-          <v-tab-item>
-            <v-container>
               <v-col cols="6">
                 <v-text-field
                   v-model="metaTitle"
@@ -111,7 +93,7 @@
     </v-row>
     <v-row>
       <v-container class="text-right">
-        <v-btn to="/categories" class="ma-1">Отмена</v-btn>
+        <v-btn to="/brands" class="ma-1">Отмена</v-btn>
         <v-btn color="primary" type="submit" dark class="ma-1">Сохранить</v-btn>
       </v-container>
     </v-row>
@@ -121,9 +103,10 @@
 </template>
 
 <script>
-    import CategoriesItemController from './categories-item-controller'
+    import CategoriesItemController from './brands-item-controller'
+    // components
     export default {
-        name: 'CategoriesItem',
+        name: 'Products',
         mixins: [CategoriesItemController]
     }
 </script>

@@ -13,7 +13,6 @@ export default {
   methods: {
     update (formData) {
       formData.append('id', this.id)
-
       // todo Возможно нужно пересмотреть реализацию
       if (this.$refs.image) {
         if (!this.$refs.image.isDirty) {

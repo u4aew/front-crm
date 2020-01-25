@@ -1,4 +1,7 @@
+import { VIEWS } from '@/views/names'
+
 export default {
+  name: VIEWS.profile.categories.index.name,
   data: () => ({
     items: [],
     headers: [
@@ -18,7 +21,7 @@ export default {
   }),
   methods: {
     deleteItem (id) {
-      this.$shop.categories.deleteCategory(id)
+      this.$shop.brands.deleteBrand(id)
         .then(() => {
           this.items = this.items.filter(item => item.getId() !== id)
         })
@@ -26,8 +29,8 @@ export default {
   },
   async mounted () {
     try {
-      const categories = await this.$shop.categories.getCategories()
-      this.items = categories.getItems()
+      const brands = await this.$shop.brands.getBrands()
+      this.items = brands.getItems()
     } catch (e) {
       throw new Error(e)
     }
