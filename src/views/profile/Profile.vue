@@ -42,6 +42,23 @@
 
             <v-list-item-title>Бренды</v-list-item-title>
           </v-list-item>
+
+          <v-list-item to="/">
+            <v-list-item-icon>
+              <v-icon>mdi-wall</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-title>Атрибуты</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="/">
+            <v-list-item-icon>
+              <v-icon>mdi-tag</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-title>Типы товаров</v-list-item-title>
+          </v-list-item>
+
         </v-list-group>
       </v-list>
     </v-navigation-drawer>
