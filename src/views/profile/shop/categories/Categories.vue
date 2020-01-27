@@ -40,10 +40,11 @@
 </template>
 
 <script>
+    import { VIEWS } from '@/views/names'
     import CategoriesController from './categories-controller'
 
     export default {
-        name: 'Categories',
+        name: VIEWS.profile.categories.index.name,
         mixins: [CategoriesController]
     }
 </script>

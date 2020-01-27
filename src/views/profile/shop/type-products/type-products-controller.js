@@ -1,4 +1,7 @@
+import { VIEWS } from '@/views/names'
+
 export default {
+  name: VIEWS.profile.typeProducts.index.name,
   data: () => ({
     items: [],
     headers: [
@@ -18,7 +21,7 @@ export default {
   }),
   methods: {
     deleteItem (id) {
-      this.$shop.brands.deleteBrand(id)
+      this.$shop.typeProducts.deleteTypeProduct(id)
         .then(() => {
           this.items = this.items.filter(item => item.getId() !== id)
         })
@@ -26,8 +29,8 @@ export default {
   },
   async mounted () {
     try {
-      const brands = await this.$shop.brands.getBrands()
-      this.items = brands.getItems()
+      const typeProducts = await this.$shop.typeProducts.getTypeProducts()
+      this.items = typeProducts.getItems()
     } catch (e) {
       throw new Error(e)
     }

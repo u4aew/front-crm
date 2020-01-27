@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col cols="12" sm="12" md="12" class="text-right">
-        <v-btn to="/brands/create" color="primary" dark class="mb-2">Добавить</v-btn>
+        <v-btn to="/type-products/create" color="primary" dark class="mb-2">Добавить</v-btn>
       </v-col>
     </v-row>
     <v-row v-if="items.length">
@@ -12,7 +12,7 @@
           :items="items"
           class="elevation-1">
           <template v-slot:item.action="{ item }">
-            <router-link style="text-decoration: none" :to="`/brands/${item.getId()}`">
+            <router-link style="text-decoration: none" :to="`/type-products/${item.getId()}`">
               <v-icon
                 small
                 class="mr-2">
@@ -42,10 +42,10 @@
 
 <script>
     import { VIEWS } from '@/views/names'
-    import BrandsController from './brands-controller'
+    import TypeProductsController from './type-products-controller'
 
     export default {
-        name: VIEWS.profile.categories.index.name,
-        mixins: [BrandsController]
+        name: VIEWS.profile.typeProducts.index.name,
+        mixins: [TypeProductsController]
     }
 </script>

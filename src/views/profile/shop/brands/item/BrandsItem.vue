@@ -106,7 +106,7 @@
     import CategoriesItemController from './brands-item-controller'
     // components
     export default {
-        name: 'Products',
+        name: 'BrandsItem',
         mixins: [CategoriesItemController]
     }
 </script>

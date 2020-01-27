@@ -26,6 +26,11 @@ export const VIEWS = {
       index: createView('brands'),
       edit: createView('brandsEdit'),
       create: createView('brandsCreate')
+    },
+    typeProducts: {
+      index: createView('typeProducts'),
+      edit: createView('typeProductsEdit'),
+      create: createView('typeProductsCreate')
     }
   },
   about: createView('about'),

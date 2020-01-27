@@ -16,6 +16,8 @@ import BrandsItem from '@/views/profile/shop/brands/item/BrandsItem'
 
 import Products from '@/views/profile/shop/products/Products'
 
+import TypeProducts from '@/views/profile/shop/type-products/TypeProducts'
+import TypeProductsItem from '@/views/profile/shop/type-products/item/TypeProductsItem'
 // system
 import NotFound from '@/views/errors/not-found'
 
@@ -64,6 +66,22 @@ const router = new Router({
           component: BrandsItem,
           name: VIEWS.profile.brands.edit.name,
           props: { edit: true }
+        },
+        {
+          path: 'type-products',
+          component: TypeProducts,
+          name: VIEWS.profile.typeProducts.index.name
+        },
+        {
+          path: 'type-products/create/',
+          component: TypeProductsItem,
+          name: VIEWS.profile.typeProducts.create.name
+        },
+        {
+          path: 'type-products/:id',
+          component: TypeProductsItem,
+          name: VIEWS.profile.typeProducts.edit.name,
+          props: { edit: true }
         }
       ]
     },
@@ -72,8 +90,7 @@ const router = new Router({
       name: VIEWS.error.notFound,
       component: NotFound
     }
-  ],
-  mode: 'history'
+  ]
 })
 
 router.beforeResolve((to, from, next) => {

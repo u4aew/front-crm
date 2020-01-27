@@ -9,6 +9,9 @@ export default {
       },
       showShopBrands () {
         toPage(VIEWS.profile.brands.index.name)
+      },
+      showTypeProducts () {
+        toPage(VIEWS.profile.typeProducts.index.name)
       }
     }
 

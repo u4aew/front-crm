@@ -51,7 +51,7 @@
             <v-list-item-title>Атрибуты</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/">
+          <v-list-item to="/type-products/">
             <v-list-item-icon>
               <v-icon>mdi-tag</v-icon>
             </v-list-item-icon>
