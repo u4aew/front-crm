@@ -22,6 +22,11 @@ export const VIEWS = {
       edit: createView('categoriesEdit'),
       create: createView('categoriesCreate')
     },
+    attributes: {
+      index: createView('attributesIndex'),
+      edit: createView('attributesEdit'),
+      create: createView('attributesCreate')
+    },
     brands: {
       index: createView('brands'),
       edit: createView('brandsEdit'),

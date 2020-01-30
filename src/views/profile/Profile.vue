@@ -43,7 +43,7 @@
             <v-list-item-title>Бренды</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/">
+          <v-list-item to="/attributes/">
             <v-list-item-icon>
               <v-icon>mdi-wall</v-icon>
             </v-list-item-icon>

@@ -18,6 +18,9 @@ import Products from '@/views/profile/shop/products/Products'
 
 import TypeProducts from '@/views/profile/shop/type-products/TypeProducts'
 import TypeProductsItem from '@/views/profile/shop/type-products/item/TypeProductsItem'
+
+import Attributes from '@/views/profile/shop/attributes/Attributes'
+import AttributesItem from '@/views/profile/shop/attributes/item/AttributesItem'
 // system
 import NotFound from '@/views/errors/not-found'
 
@@ -81,6 +84,22 @@ const router = new Router({
           path: 'type-products/:id',
           component: TypeProductsItem,
           name: VIEWS.profile.typeProducts.edit.name,
+          props: { edit: true }
+        },
+        {
+          path: 'attributes',
+          component: Attributes,
+          name: VIEWS.profile.attributes.index.name
+        },
+        {
+          path: 'attributes/create/',
+          component: AttributesItem,
+          name: VIEWS.profile.attributes.create.name
+        },
+        {
+          path: 'attributes/:id',
+          component: AttributesItem,
+          name: VIEWS.profile.attributes.edit.name,
           props: { edit: true }
         }
       ]
