@@ -43,15 +43,12 @@
                       @input="$v.name.$touch()"
                       @blur="$v.name.$touch()"
                     />
-                    <v-text-field
-                      v-model="slug"
-                      name="slug"
-                      required
-                      label="Алиас"
-                      :error-messages="slugErrors"
-                      @input="$v.slug.$touch()"
-                      @blur="$v.slug.$touch()"
-                    />
+                  <v-text-field
+                    :value="nameTranslite"
+                    name="slug"
+                    required
+                    label="Алиас"
+                  />
                     <v-textarea
                       rows="2"
                       name="description"
