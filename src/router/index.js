@@ -15,6 +15,7 @@ import Brands from '@/views/profile/shop/brands/Brands'
 import BrandsItem from '@/views/profile/shop/brands/item/BrandsItem'
 
 import Products from '@/views/profile/shop/products/Products'
+import ProductsItem from '@/views/profile/shop/products/item/ProductsItem'
 
 import TypeProducts from '@/views/profile/shop/type-products/TypeProducts'
 import TypeProductsItem from '@/views/profile/shop/type-products/item/TypeProductsItem'
@@ -34,11 +35,6 @@ const router = new Router({
       component: Profile,
       children: [
         {
-          path: 'products',
-          component: Products,
-          name: VIEWS.profile.products.index.name
-        },
-        {
           path: 'categories',
           component: Categories,
           name: VIEWS.profile.categories.index.name
@@ -52,6 +48,22 @@ const router = new Router({
           path: 'categories/:id',
           component: CategoriesItem,
           name: VIEWS.profile.categories.edit.name,
+          props: { edit: true }
+        },
+        {
+          path: 'products',
+          component: Products,
+          name: VIEWS.profile.products.index.name
+        },
+        {
+          path: 'products/create/',
+          component: ProductsItem,
+          name: VIEWS.profile.products.create.name
+        },
+        {
+          path: 'products/:id',
+          component: ProductsItem,
+          name: VIEWS.profile.products.edit.name,
           props: { edit: true }
         },
         {

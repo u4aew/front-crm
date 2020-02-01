@@ -24,10 +24,16 @@
               </v-container>
             </v-tab-item>
             <v-tab-item>
-              <v-container>
-                <v-col cols="6">
-                  Выбор атрибутов
-                </v-col>
+              <v-container v-if="attributes">
+                <v-data-table
+                  v-model="selected"
+                  :headers="headers"
+                  :items="attributes"
+                  item-key="name"
+                  show-select
+                  class="elevation-1"
+                >
+                </v-data-table>
               </v-container>
             </v-tab-item>
           </v-tabs>

@@ -1,5 +1,5 @@
 import ItemsBaseModel from '@/plugins/service/shop/base/model/items-base-model'
-import ItemBaseModel from '@/plugins/service/shop/base/model/item-base-model'
+import AttributeModel from '@/plugins/service/shop/attributes/model/attribute-model'
 
 class AttributesService {
   constructor (notify, pageManager, api) {
@@ -22,12 +22,10 @@ class AttributesService {
   }
 
   getAttribute (id) {
-
-    console.log(id)
     return new Promise((resolve, reject) => {
       this.$api.getAttribute(id)
         .then(({ data }) => {
-          resolve(new ItemBaseModel(data))
+          resolve(new AttributeModel(data))
         })
         .catch((e) => {
           reject(e)
@@ -41,7 +39,7 @@ class AttributesService {
       this.$api.createAttribute(data)
         .then(() => {
           resolve()
-          this.$pageManager.showTypeProducts()
+          this.$pageManager.showAttributes()
           this._processSuccess()
         })
         .catch((e) => {
@@ -56,7 +54,7 @@ class AttributesService {
       this.$api.updateAttribute(data)
         .then(() => {
           resolve()
-          this.$pageManager.showTypeProducts()
+          this.$pageManager.showAttributes()
           this._processSuccess()
         })
         .catch((e) => {

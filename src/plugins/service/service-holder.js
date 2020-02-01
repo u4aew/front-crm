@@ -12,6 +12,9 @@ import TypeProductsApiService from '@/plugins/service/shop/type-products/service
 import AttributesService from '@/plugins/service/shop/attributes/service/attributes-service'
 import AttributesApiService from '@/plugins/service/shop/attributes/service/attributes-api-service'
 
+import ProductsApiService from '@/plugins/service/shop/products/service/products-api-service'
+import ProductsService from '@/plugins/service/shop/products/service/products-service'
+
 export default {
   install (Vue, opts = {}) {
     const http = opts.http
@@ -22,11 +25,14 @@ export default {
     const apiBrands = new BrandsApiService(http)
     const apiTypeProducts = new TypeProductsApiService(http)
     const apiAttributes = new AttributesApiService(http)
+    const apiProducts = new ProductsApiService(http)
+
     Vue.prototype.$shop = {
       categories: new CategoriesService(notify, pageManager, apiCategories),
       brands: new BrandsService(notify, pageManager, apiBrands),
       typeProducts: new TypeProductsService(notify, pageManager, apiTypeProducts),
-      attributes: new AttributesService(notify, pageManager, apiAttributes)
+      attributes: new AttributesService(notify, pageManager, apiAttributes),
+      products: new ProductsService(notify, pageManager, apiProducts)
     }
   }
 }

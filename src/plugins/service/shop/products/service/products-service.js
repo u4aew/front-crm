@@ -1,16 +1,16 @@
 import ItemsBaseModel from '@/plugins/service/shop/base/model/items-base-model'
-import TypeProduct from '@/plugins/service/shop/type-products/model/type-product'
+import ProductModel from '@/plugins/service/shop/products/model/product-model'
 
-class TypeProductsService {
+class ProductsService {
   constructor (notify, pageManager, api) {
     this.$notify = notify
     this.$pageManager = pageManager
     this.$api = api
   }
 
-  getTypeProducts () {
+  getProducts () {
     return new Promise((resolve, reject) => {
-      this.$api.getTypeProducts()
+      this.$api.getProducts()
         .then(({ data }) => {
           resolve(new ItemsBaseModel(data))
         })
@@ -21,11 +21,11 @@ class TypeProductsService {
     })
   }
 
-  getTypeProduct (id) {
+  getProduct (id) {
     return new Promise((resolve, reject) => {
-      this.$api.getTypeProduct(id)
+      this.$api.getProduct(id)
         .then(({ data }) => {
-          resolve(new TypeProduct(data))
+          resolve(new ProductModel(data))
         })
         .catch((e) => {
           reject(e)
@@ -34,12 +34,12 @@ class TypeProductsService {
     })
   }
 
-  createTypeProduct (data) {
+  createProduct (data) {
     return new Promise((resolve, reject) => {
-      this.$api.createTypeProduct(data)
+      this.$api.createProduct(data)
         .then(() => {
           resolve()
-          this.$pageManager.showTypeProducts()
+          this.$pageManager.showProducts()
           this._processSuccess()
         })
         .catch((e) => {
@@ -49,12 +49,12 @@ class TypeProductsService {
     })
   }
 
-  updateTypeProduct (data) {
+  updateProduct (data) {
     return new Promise((resolve, reject) => {
-      this.$api.updateTypeProduct(data)
+      this.$api.updateProduct(data)
         .then(() => {
           resolve()
-          this.$pageManager.showTypeProducts()
+          this.$pageManager.showProducts()
           this._processSuccess()
         })
         .catch((e) => {
@@ -64,10 +64,10 @@ class TypeProductsService {
     })
   }
 
-  deleteTypeProduct (id) {
-    if (confirm('Удалить тип товара ?')) {
+  deleteProduct (id) {
+    if (confirm('Удалить продукт ?')) {
       return new Promise((resolve, reject) => {
-        this.$api.deleteTypeProduct(id)
+        this.$api.deleteProduct(id)
           .then(() => {
             resolve()
             this._processSuccess()
@@ -91,4 +91,4 @@ class TypeProductsService {
   }
 }
 
-export default TypeProductsService
+export default ProductsService

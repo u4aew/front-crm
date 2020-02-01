@@ -8,7 +8,7 @@
             <v-tab-item>
               <v-container>
                 <v-row>
-                  <v-col cols="6">
+                  <v-col cols="3">
                     <v-text-field
                       v-model="name"
                       name="name"
@@ -20,6 +20,56 @@
                     />
                   </v-col>
                 </v-row>
+                <v-row>
+                  <v-col cols="6">
+                    <v-row>
+                      <v-col cols="6">
+                        <v-select
+                          v-model="type"
+                          :items="types"
+                          item-text="name"
+                          item-value="id"
+                          label="Тип"
+                          return-object
+                          single-line
+                        />
+                      </v-col>
+                      <v-col cols="6">
+                        <template v-if="vieUnit">
+                          <v-text-field
+                            v-model="unit"
+                            name="unit"
+                            label="Единица измерения"
+                          />
+                        </template>
+                      </v-col>
+                      <v-col cols="8" v-if="viewOptionsRaw">
+                        <v-textarea
+                          rows="5"
+                          name="optionRaw"
+                          v-model="optionRaw"
+                          label="Каждое значение опции должно быть на новой строке."
+                        />
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="2" align="center">
+                    <v-checkbox
+                      name="required"
+                      v-model="required"
+                      label="Обязательный"
+                    />
+                  </v-col>
+                  <v-col cols="2" align="center">
+                    <v-checkbox
+                      name="isFilter"
+                      v-model="isFilter"
+                      label="Фильтр"
+                    />
+                  </v-col>
+                </v-row>
               </v-container>
             </v-tab-item>
           </v-tabs>
@@ -27,7 +77,7 @@
       </v-row>
       <v-row>
         <v-container class="text-right">
-          <v-btn to="/type-products/" class="ma-1">Отмена</v-btn>
+          <v-btn to="/attributes/" class="ma-1">Отмена</v-btn>
           <v-btn color="primary" type="submit" dark class="ma-1">Сохранить</v-btn>
         </v-container>
       </v-row>

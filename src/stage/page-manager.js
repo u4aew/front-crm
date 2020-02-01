@@ -12,6 +12,12 @@ export default {
       },
       showTypeProducts () {
         toPage(VIEWS.profile.typeProducts.index.name)
+      },
+      showProducts () {
+        toPage(VIEWS.profile.products.index.name)
+      },
+      showAttributes () {
+        toPage(VIEWS.profile.attributes.index.name)
       }
     }
 

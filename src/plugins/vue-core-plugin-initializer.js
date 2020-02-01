@@ -5,8 +5,6 @@ import PageManager from '@/stage/page-manager'
 import ServiceHolder from '@/plugins/service/service-holder'
 import VueBackClient from '@/plugins/service/transport/vue-back-client'
 
-import ProductsPluginInitializer from '@/app/products/plugins/products-plugin-initializer'
-
 import Notifications from 'vue-notification'
 import PortalVue from 'portal-vue'
 
@@ -26,8 +24,6 @@ class VueCorePluginInitializer {
       notify: Vue.prototype.$notify,
       pageManager: Vue.prototype.$pageManager
     })
-
-    ProductsPluginInitializer()
   }
 }
 

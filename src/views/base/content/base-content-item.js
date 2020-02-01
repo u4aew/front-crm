@@ -1,4 +1,5 @@
 import { required } from 'vuelidate/lib/validators'
+import cyrillicToTranslit from 'cyrillic-to-translit-js'
 
 export default {
   props: {
@@ -43,6 +44,9 @@ export default {
     }
   },
   computed: {
+    nameTranslite () {
+      return cyrillicToTranslit().transform(this.name, '-').toLowerCase()
+    },
     nameErrors () {
       const errors = []
       if (!this.$v.name.$dirty) return errors
