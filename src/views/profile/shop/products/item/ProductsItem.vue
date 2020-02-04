@@ -55,6 +55,15 @@
                       required
                       label="Цена"
                     />
+                    <v-select
+                      v-model="category"
+                      :items="categories"
+                      item-text="name"
+                      item-value="id"
+                      label="Родительская категория"
+                      return-object
+                      single-line
+                    />
                     <v-textarea
                       rows="2"
                       name="description"

@@ -8,7 +8,8 @@ export default {
       parentCategory: {
         id: null, name: 'Не выбрано'
       },
-      categories: [{ id: null, name: 'Не выбрано' }]
+      categories: [],
+      category: {}
     }
   },
   methods: {
@@ -23,6 +24,7 @@ export default {
       this.metaKeywords = model.getMetaKeywords()
       this.metaDescription = model.getMetaDescription()
       this.price = model.getPrice()
+      this.category = { id: model.getCategory().getId(), name: model.getCategory().getName() }
     },
     update (formData) {
       formData.append('id', this.id)
@@ -39,6 +41,7 @@ export default {
     },
     submit () {
       const formData = new FormData(this.$refs.form)
+      formData.append('category', this.category.id)
       if (this.parentCategory.id) {
         formData.append('parentId', this.parentCategory.id)
       }
@@ -50,6 +53,11 @@ export default {
     }
   },
   async beforeMount () {
+    const categoriesModel = await this.$shop.categories.getCategories()
+    categoriesModel.getItems().forEach((item) => {
+      this.categories.push({ id: item.getId(), name: item.getName() })
+    })
+    this.category = this.categories[0]
     if (this.edit) {
       const categoryModel = await this.$shop.products.getProduct(this.$route.params.id)
       this.setData(categoryModel)
