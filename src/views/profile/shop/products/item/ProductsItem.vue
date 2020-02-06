@@ -64,6 +64,15 @@
                       return-object
                       single-line
                     />
+                    <v-select
+                      v-model="brand"
+                      :items="brands"
+                      item-text="name"
+                      item-value="id"
+                      label="Бренд"
+                      return-object
+                      single-line
+                    />
                     <v-textarea
                       rows="2"
                       name="description"
@@ -84,15 +93,7 @@
               <v-container>
                 <v-row>
                   <v-col cols="6">
-                    <v-select
-                      v-model="parentCategory"
-                      :items="categories"
-                      item-text="name"
-                      item-value="id"
-                      label="Родительская категория"
-                      return-object
-                      single-line
-                    />
+                    атрибуты
                   </v-col>
                 </v-row>
               </v-container>

@@ -5,11 +5,10 @@ export default {
   data () {
     return {
       price: null,
-      parentCategory: {
-        id: null, name: 'Не выбрано'
-      },
       categories: [],
-      category: {}
+      category: {},
+      brands: [],
+      brand: {}
     }
   },
   methods: {
@@ -25,6 +24,7 @@ export default {
       this.metaDescription = model.getMetaDescription()
       this.price = model.getPrice()
       this.category = { id: model.getCategory().getId(), name: model.getCategory().getName() }
+      this.brand = { id: model.getBrand().getId(), name: model.getBrand().getName() }
     },
     update (formData) {
       formData.append('id', this.id)
@@ -42,9 +42,7 @@ export default {
     submit () {
       const formData = new FormData(this.$refs.form)
       formData.append('category', this.category.id)
-      if (this.parentCategory.id) {
-        formData.append('parentId', this.parentCategory.id)
-      }
+      formData.append('brand', this.brand.id)
       if (this.edit) {
         this.update(formData)
       } else {
@@ -57,7 +55,15 @@ export default {
     categoriesModel.getItems().forEach((item) => {
       this.categories.push({ id: item.getId(), name: item.getName() })
     })
+
+    const brandsModel = await this.$shop.brands.getBrands()
+    brandsModel.getItems().forEach((item) => {
+      this.brands.push({ id: item.getId(), name: item.getName() })
+    })
+
     this.category = this.categories[0]
+    this.brand = this.brands[0]
+
     if (this.edit) {
       const categoryModel = await this.$shop.products.getProduct(this.$route.params.id)
       this.setData(categoryModel)
