@@ -9,6 +9,12 @@ export default {
         value: 'name'
       },
       {
+        text: 'Родитель',
+        align: 'right',
+        sortable: true,
+        value: 'parent'
+      },
+      {
         text: 'Управление',
         value: 'action',
         align: 'right',

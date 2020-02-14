@@ -1,5 +1,6 @@
-import ItemsBaseModel from '@/plugins/service/shop/base/model/items-base-model'
+import CategoriesModel from '@/plugins/service/shop/categories/model/categories-model'
 import CategoryModel from '@/plugins/service/shop/categories/model/category-model'
+import HelperCategories from '@/plugins/service/shop/categories/helper/helper-categories'
 
 class CategoriesService {
   constructor (notify, pageManager, api) {
@@ -12,7 +13,8 @@ class CategoriesService {
     return new Promise((resolve, reject) => {
       this.$api.getCategories()
         .then(({ data }) => {
-          resolve(new ItemsBaseModel(data))
+          const normalizeData = HelperCategories.normalize(data)
+          resolve(new CategoriesModel(normalizeData))
         })
         .catch((e) => {
           reject(e)

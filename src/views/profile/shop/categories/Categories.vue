@@ -7,6 +7,7 @@
     </v-row>
     <v-row v-if="items.length">
       <v-col cols="12" sm="12" md="12">
+        <!-- // todo нужен компонент дерево -->
         <v-data-table
           :headers="headers"
           :items="items"
