@@ -15,7 +15,8 @@ export default {
       options: [],
       option: {},
       typeProduct: null,
-      dialog: false
+      dialog: false,
+      optionEdit: {}
     }
   },
   methods: {
@@ -46,8 +47,20 @@ export default {
     save (formData) {
       this.$shop.products.createProduct(formData)
     },
-    normalizeOptionsRaw (value) {
-      return value.split(/\n/)
+    cancelEditOption () {
+      this.dialog = false
+      this.optionEdit = {}
+    },
+    editOption (title) {
+      const option = this.options.find(item => item.title === title)
+      this.optionEdit.oldTitle = option.title
+      this.optionEdit.title = option.title
+      this.optionEdit.price = option.price
+      this.optionEdit.available = option.available
+      option.attributes.forEach((item) => {
+        this.optionEdit[item.attributeId] = item.value
+      })
+      this.dialog = true
     },
     async changeTypeProduct (value) {
       this.typeProduct = await this.$shop.typeProducts.getTypeProduct(value.id)
@@ -58,8 +71,44 @@ export default {
         this.option[item.getId()] = ''
       })
     },
+    normalizeOptionsRaw (value) {
+      return value.split(/\n/)
+    },
     removeOption (title) {
       this.options = this.options.filter(item => item.title !== title)
+    },
+    saveEditOption () {
+      const result = {
+        title: null,
+        price: null,
+        available: false,
+        attributes: []
+      }
+      for (let key in this.optionEdit) {
+        if (key === 'title' || key === 'available' || key === 'price') {
+          if (!Helper.isDefined(this.optionEdit[key])) {
+            alert(`Поле ${key} не заполнено`)
+            return
+          }
+          if (key === 'title') {
+            if (Helper.isDefined(this.options
+              .filter(item => item.title !== this.optionEdit.oldTitle)
+              .find(item => item.title === this.optionEdit[key]))) {
+              alert(`Такое название уже существует`)
+              return
+            }
+          }
+          result[key] = this.optionEdit[key]
+        } else {
+          result.attributes.push({ attributeId: key, value: this.optionEdit[key] })
+        }
+      }
+      const opt = this.options.find(item => item.title === this.optionEdit.oldTitle)
+      opt.title = result.title
+      opt.price = result.price
+      opt.available = result.available
+      opt.attributes = result.attributes
+      this.dialog = false
     },
     addOption () {
       const result = {
@@ -70,7 +119,6 @@ export default {
       }
       for (let key in this.option) {
         if (key === 'title' || key === 'available' || key === 'price') {
-          console.log(this.option[key])
           if (!Helper.isDefined(this.option[key])) {
             alert(`Поле ${key} не заполнено`)
             return

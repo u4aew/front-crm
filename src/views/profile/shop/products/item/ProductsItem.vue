@@ -98,6 +98,88 @@
                       single-line
                     />
                     <v-row v-if="typeProduct">
+                      <v-dialog v-model="dialog" persistent max-width="600px">
+                        <v-card>
+                          <v-card-title>
+                            <span class="headline">Редактирование</span>
+                          </v-card-title>
+                          <v-card-text>
+                            <v-container>
+                              <v-row>
+                                <v-col cols="12">
+                                  <v-text-field
+                                    name="nameOptionEdit"
+                                    required
+                                    v-model="optionEdit.title"
+                                    label="Название комплектации"
+                                  />
+                                </v-col>
+                                <template v-for="(item, key) in typeProduct.getAttributes()">
+                                  <v-col cols="12" :key="key" v-if="item.getTypeId() === 1">
+                                    <v-text-field
+                                      v-model="optionEdit[item.getId()]"
+                                      :name="`attribute ${item.getId()}`"
+                                      :required="item.getRequired()"
+                                      :label="item.getName()"
+                                    />
+                                  </v-col>
+                                  <v-col cols="12" :key="key" v-if="item.getTypeId() === 2">
+                                    <v-select
+                                      v-model="optionEdit[item.getId()]"
+                                      :name="`attribute ${item.getId()}`"
+                                      :required="item.getRequired()"
+                                      :label="item.getName()"
+                                      :items="normalizeOptionsRaw(item.getOptionRaw())"
+                                    />
+                                  </v-col>
+                                  <v-col cols="12" :key="key" v-if="item.getTypeId() === 3">
+                                    <v-checkbox
+                                      v-model="optionEdit[item.getId()]"
+                                      :name="`attribute ${item.getId()}`"
+                                      :required="item.getRequired()"
+                                      :label="item.getName()"
+                                    />
+                                  </v-col>
+                                  <v-col cols="12" :key="key" v-if="item.getTypeId() === 4">
+                                    <v-row align="center">
+                                      <v-col cols="10">
+                                        <v-text-field
+                                          v-model="optionEdit[item.getId()]"
+                                          :name="`attribute ${item.getId()}`"
+                                          :required="item.getRequired()"
+                                          :label="item.getName()"
+                                        />
+                                      </v-col>
+                                      <v-col cols="2">{{item.getUnit()}}</v-col>
+                                    </v-row>
+                                  </v-col>
+                                </template>
+                                <v-col cols="12">
+                                  <v-text-field
+                                    name="priceEdit"
+                                    required
+                                    v-model="optionEdit.price"
+                                    label="Цена"
+                                  />
+                                </v-col>
+                                <v-col cols="12">
+                                  <v-checkbox
+                                    name="availableEdit"
+                                    required
+                                    v-model="optionEdit.available"
+                                    label="Наличие"
+                                  />
+                                </v-col>
+                              </v-row>
+                            </v-container>
+                          </v-card-text>
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="cancelEditOption">Закрыть</v-btn>
+                            <v-btn color="blue darken-1" text @click="saveEditOption">Сохранить</v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
                       <v-col cols="12">
                         <!-- 1 - Текст-->
                         <!-- 2 - Выпадающий список-->
@@ -168,71 +250,18 @@
                   <v-col cols="6">
                     <template v-for="(option, key) in options">
                       <v-row :key="key" align="center">
-                        <v-col cols="8">
+                        <v-col cols="6">
                           {{option.title}}
                         </v-col>
-                        <v-col cols="4">
-                          <v-btn @click="removeOption(option.title)" small class="ma-1">Удалить</v-btn>
-
-                          <v-dialog v-model="dialog" persistent max-width="600px">
-                            <template v-slot:activator="{ on }">
-                              <v-btn small color="primary"  v-on="on" dark class="ma-1">Редактировать</v-btn>
-                            </template>
-                            <v-card>
-                              <v-card-title>
-                                <span class="headline">User Profile</span>
-                              </v-card-title>
-                              <v-card-text>
-                                <v-container>
-                                  <v-row>
-                                    <v-col cols="12" sm="6" md="4">
-                                      <v-text-field label="Legal first name*" required></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="4">
-                                      <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="4">
-                                      <v-text-field
-                                        label="Legal last name*"
-                                        hint="example of persistent helper text"
-                                        persistent-hint
-                                        required
-                                      ></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12">
-                                      <v-text-field label="Email*" required></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12">
-                                      <v-text-field label="Password*" type="password" required></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6">
-                                      <v-select
-                                        :items="['0-17', '18-29', '30-54', '54+']"
-                                        label="Age*"
-                                        required
-                                      ></v-select>
-                                    </v-col>
-                                    <v-col cols="12" sm="6">
-                                      <v-autocomplete
-                                        :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                                        label="Interests"
-                                        multiple
-                                      ></v-autocomplete>
-                                    </v-col>
-                                  </v-row>
-                                </v-container>
-                                <small>*indicates required field</small>
-                              </v-card-text>
-                              <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                                <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
-                              </v-card-actions>
-                            </v-card>
-                          </v-dialog>
+                        <v-col cols="6">
+                          <v-row justify="end">
+                            <v-btn @click="removeOption(option.title)" small class="ma-1">Удалить</v-btn>
+                            <v-btn @click="editOption(option.title)" small color="primary" dark class="ma-1">Ред.
+                            </v-btn>
+                          </v-row>
                         </v-col>
                       </v-row>
-                      <v-divider :key="key"/>
+                      <v-divider :key="`divider-${key}`"/>
                     </template>
                   </v-col>
                 </v-row>
@@ -277,7 +306,7 @@
     import ProductsItemController from './products-item-controller'
 
     export default {
-        name: 'CategoriesItem',
+        name: 'ProductsItem',
         mixins: [ProductsItemController]
     }
 </script>
