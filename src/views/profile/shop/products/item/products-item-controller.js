@@ -1,3 +1,4 @@
+import Helper from '@/core/utils/helper'
 import BaseContentItem from '@/views/base/content/base-content-item'
 
 export default {
@@ -8,7 +9,13 @@ export default {
       categories: [],
       category: {},
       brands: [],
-      brand: {}
+      brand: {},
+      type: null,
+      types: [],
+      options: [],
+      option: {},
+      typeProduct: null,
+      dialog: false
     }
   },
   methods: {
@@ -39,6 +46,48 @@ export default {
     save (formData) {
       this.$shop.products.createProduct(formData)
     },
+    normalizeOptionsRaw (value) {
+      return value.split(/\n/)
+    },
+    async changeTypeProduct (value) {
+      this.typeProduct = await this.$shop.typeProducts.getTypeProduct(value.id)
+      this.option.title = null
+      this.option.price = null
+      this.option.available = false
+      this.typeProduct.getAttributes().forEach((item) => {
+        this.option[item.getId()] = ''
+      })
+    },
+    removeOption (title) {
+      this.options = this.options.filter(item => item.title !== title)
+    },
+    addOption () {
+      const result = {
+        title: null,
+        price: null,
+        available: false,
+        attributes: []
+      }
+      for (let key in this.option) {
+        if (key === 'title' || key === 'available' || key === 'price') {
+          console.log(this.option[key])
+          if (!Helper.isDefined(this.option[key])) {
+            alert(`Поле ${key} не заполнено`)
+            return
+          }
+          if (key === 'title') {
+            if (Helper.isDefined(this.options.find(item => item.title === this.option[key]))) {
+              alert(`Такое название уже существует`)
+              return
+            }
+          }
+          result[key] = this.option[key]
+        } else {
+          result.attributes.push({ attributeId: key, value: this.option[key] })
+        }
+      }
+      this.options.push(result)
+    },
     submit () {
       const formData = new FormData(this.$refs.form)
       formData.append('category', this.category.id)
@@ -59,6 +108,11 @@ export default {
     const brandsModel = await this.$shop.brands.getBrands()
     brandsModel.getItems().forEach((item) => {
       this.brands.push({ id: item.getId(), name: item.getName() })
+    })
+
+    const typesModel = await this.$shop.typeProducts.getTypeProducts()
+    typesModel.getItems().forEach((item) => {
+      this.types.push({ id: item.getId(), name: item.getName() })
     })
 
     this.category = this.categories[0]

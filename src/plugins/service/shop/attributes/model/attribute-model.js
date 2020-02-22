@@ -7,6 +7,7 @@ class AttributeModel extends ItemBaseModel {
     super(data)
     this.unit = Helper.getValue(data.unit)
     this.type = Helper.getValue(data.type)
+    this.typeId = Helper.getValue(data.typeId)
     this.isFilter = Helper.getValue(data.isFilter)
     this.required = Helper.getValue(data.required)
     this.optionRaw = Helper.getValue(data.optionRaw)
@@ -18,6 +19,10 @@ class AttributeModel extends ItemBaseModel {
 
   getType () {
     return this.type
+  }
+
+  getTypeId () {
+    return this.typeId
   }
 
   getIsFilter () {
