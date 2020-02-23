@@ -165,7 +165,6 @@
                                 <v-col cols="12">
                                   <v-checkbox
                                     name="availableEdit"
-                                    required
                                     v-model="optionEdit.available"
                                     label="Наличие"
                                   />
@@ -239,7 +238,6 @@
                         />
                         <v-checkbox
                           name="available"
-                          required
                           v-model="option.available"
                           label="Наличие"
                         />

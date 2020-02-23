@@ -36,7 +36,7 @@ export default {
     },
     update (formData) {
       formData.append('id', this.id)
-      // todo Возможно нужно пересмотреть реализацию
+      // todo нужно пересмотреть реализацию
       if (this.$refs.image) {
         if (!this.$refs.image.isDirty) {
           formData.append('removeImage', true)
@@ -140,6 +140,7 @@ export default {
       const formData = new FormData(this.$refs.form)
       formData.append('category', this.category.id)
       formData.append('brand', this.brand.id)
+      formData.append('options', JSON.stringify(this.options))
       if (this.edit) {
         this.update(formData)
       } else {
