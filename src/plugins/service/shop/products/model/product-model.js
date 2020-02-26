@@ -8,16 +8,22 @@ class ProductModel extends ItemBaseExtendedModel {
     super(data)
     this.price = Helper.getValue(data.price)
     this.category = new CategoryModel(data.category)
-    this.brand = new ItemBaseModel(data.category)
+    this.brand = new ItemBaseModel(data.brand)
+    this.type = new ItemBaseModel(data.type)
   }
 
   getPrice () {
     return this.price
   }
 
+  getType () {
+    return this.type
+  }
+
   getCategory () {
     return this.category
   }
+
   getBrand () {
     return this.brand
   }

@@ -16,7 +16,8 @@ export default {
       option: {},
       typeProduct: null,
       dialog: false,
-      optionEdit: {}
+      optionEdit: {},
+      disabledOption: true
     }
   },
   methods: {
@@ -31,6 +32,7 @@ export default {
       this.metaKeywords = model.getMetaKeywords()
       this.metaDescription = model.getMetaDescription()
       this.price = model.getPrice()
+      this.type = { id: model.getType().getId(), name: model.getType().getName() }
       this.category = { id: model.getCategory().getId(), name: model.getCategory().getName() }
       this.brand = { id: model.getBrand().getId(), name: model.getBrand().getName() }
     },
@@ -63,10 +65,14 @@ export default {
       this.dialog = true
     },
     async changeTypeProduct (value) {
-      this.typeProduct = await this.$shop.typeProducts.getTypeProduct(value.id)
+      this.setTypeProductAttributes(value.id)
+    },
+    async setTypeProductAttributes (id) {
+      this.typeProduct = await this.$shop.typeProducts.getTypeProduct(id)
       this.option.title = null
       this.option.price = null
       this.option.available = false
+      console.log(this.typeProduct)
       this.typeProduct.getAttributes().forEach((item) => {
         this.option[item.getId()] = ''
       })
@@ -134,13 +140,14 @@ export default {
           result.attributes.push({ attributeId: key, value: this.option[key] })
         }
       }
+      console.log(result)
       this.options.push(result)
     },
     submit () {
       const formData = new FormData(this.$refs.form)
       formData.append('category', this.category.id)
       formData.append('brand', this.brand.id)
-      formData.append('options', JSON.stringify(this.options))
+      formData.append('typeId', this.type.id)
       if (this.edit) {
         this.update(formData)
       } else {
@@ -168,8 +175,11 @@ export default {
     this.brand = this.brands[0]
 
     if (this.edit) {
-      const categoryModel = await this.$shop.products.getProduct(this.$route.params.id)
-      this.setData(categoryModel)
+      this.disabledOption = false
+      const productModel = await this.$shop.products.getProduct(this.$route.params.id)
+      this.setData(productModel)
+      // Заполнение атрибутов
+      this.setTypeProductAttributes(this.type.id)
     }
   }
 }
