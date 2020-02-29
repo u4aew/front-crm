@@ -15,9 +15,7 @@ export default {
       options: [],
       option: {},
       typeProduct: null,
-      dialog: false,
-      optionEdit: {},
-      disabledOption: true
+      dialog: false
     }
   },
   methods: {
@@ -32,13 +30,12 @@ export default {
       this.metaKeywords = model.getMetaKeywords()
       this.metaDescription = model.getMetaDescription()
       this.price = model.getPrice()
-      this.type = { id: model.getType().getId(), name: model.getType().getName() }
       this.category = { id: model.getCategory().getId(), name: model.getCategory().getName() }
       this.brand = { id: model.getBrand().getId(), name: model.getBrand().getName() }
     },
     update (formData) {
       formData.append('id', this.id)
-      // todo нужно пересмотреть реализацию
+      // todo Возможно нужно пересмотреть реализацию
       if (this.$refs.image) {
         if (!this.$refs.image.isDirty) {
           formData.append('removeImage', true)
@@ -49,72 +46,20 @@ export default {
     save (formData) {
       this.$shop.products.createProduct(formData)
     },
-    cancelEditOption () {
-      this.dialog = false
-      this.optionEdit = {}
-    },
-    editOption (title) {
-      const option = this.options.find(item => item.title === title)
-      this.optionEdit.oldTitle = option.title
-      this.optionEdit.title = option.title
-      this.optionEdit.price = option.price
-      this.optionEdit.available = option.available
-      option.attributes.forEach((item) => {
-        this.optionEdit[item.attributeId] = item.value
-      })
-      this.dialog = true
+    normalizeOptionsRaw (value) {
+      return value.split(/\n/)
     },
     async changeTypeProduct (value) {
-      this.setTypeProductAttributes(value.id)
-    },
-    async setTypeProductAttributes (id) {
-      this.typeProduct = await this.$shop.typeProducts.getTypeProduct(id)
+      this.typeProduct = await this.$shop.typeProducts.getTypeProduct(value.id)
       this.option.title = null
       this.option.price = null
       this.option.available = false
-      console.log(this.typeProduct)
       this.typeProduct.getAttributes().forEach((item) => {
         this.option[item.getId()] = ''
       })
     },
-    normalizeOptionsRaw (value) {
-      return value.split(/\n/)
-    },
     removeOption (title) {
       this.options = this.options.filter(item => item.title !== title)
-    },
-    saveEditOption () {
-      const result = {
-        title: null,
-        price: null,
-        available: false,
-        attributes: []
-      }
-      for (let key in this.optionEdit) {
-        if (key === 'title' || key === 'available' || key === 'price') {
-          if (!Helper.isDefined(this.optionEdit[key])) {
-            alert(`Поле ${key} не заполнено`)
-            return
-          }
-          if (key === 'title') {
-            if (Helper.isDefined(this.options
-              .filter(item => item.title !== this.optionEdit.oldTitle)
-              .find(item => item.title === this.optionEdit[key]))) {
-              alert(`Такое название уже существует`)
-              return
-            }
-          }
-          result[key] = this.optionEdit[key]
-        } else {
-          result.attributes.push({ attributeId: key, value: this.optionEdit[key] })
-        }
-      }
-      const opt = this.options.find(item => item.title === this.optionEdit.oldTitle)
-      opt.title = result.title
-      opt.price = result.price
-      opt.available = result.available
-      opt.attributes = result.attributes
-      this.dialog = false
     },
     addOption () {
       const result = {
@@ -125,6 +70,7 @@ export default {
       }
       for (let key in this.option) {
         if (key === 'title' || key === 'available' || key === 'price') {
+          console.log(this.option[key])
           if (!Helper.isDefined(this.option[key])) {
             alert(`Поле ${key} не заполнено`)
             return
@@ -140,14 +86,12 @@ export default {
           result.attributes.push({ attributeId: key, value: this.option[key] })
         }
       }
-      console.log(result)
       this.options.push(result)
     },
     submit () {
       const formData = new FormData(this.$refs.form)
       formData.append('category', this.category.id)
       formData.append('brand', this.brand.id)
-      formData.append('typeId', this.type.id)
       if (this.edit) {
         this.update(formData)
       } else {
@@ -175,11 +119,8 @@ export default {
     this.brand = this.brands[0]
 
     if (this.edit) {
-      this.disabledOption = false
-      const productModel = await this.$shop.products.getProduct(this.$route.params.id)
-      this.setData(productModel)
-      // Заполнение атрибутов
-      this.setTypeProductAttributes(this.type.id)
+      const categoryModel = await this.$shop.products.getProduct(this.$route.params.id)
+      this.setData(categoryModel)
     }
   }
 }
