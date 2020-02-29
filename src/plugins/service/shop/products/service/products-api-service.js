@@ -31,6 +31,42 @@ class ProductsApiService {
     })
   }
 
+  createProductOption (data) {
+    return new Promise((resolve, reject) => {
+      this.$http.post('products/options', data)
+        .then((data) => {
+          resolve(data)
+        })
+        .catch((e) => {
+          reject(e)
+        })
+    })
+  }
+
+  updateProductOption (form) {
+    return new Promise((resolve, reject) => {
+      this.$http.put('products/options', form)
+        .then((data) => {
+          resolve(data)
+        })
+        .catch((e) => {
+          reject(e)
+        })
+    })
+  }
+
+  deleteProductOption (data) {
+    return new Promise((resolve, reject) => {
+      this.$http.delete('products/options', data)
+        .then((data) => {
+          resolve(data)
+        })
+        .catch((e) => {
+          reject(e)
+        })
+    })
+  }
+
   updateProduct (data) {
     return new Promise((resolve, reject) => {
       this.$http.put('products', data, {

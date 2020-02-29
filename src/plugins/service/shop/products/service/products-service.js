@@ -1,5 +1,6 @@
 import ItemsBaseModel from '@/plugins/service/shop/base/model/items-base-model'
 import ProductModel from '@/plugins/service/shop/products/model/product-model'
+import ProductOption from '@/plugins/service/shop/products/model/product-option'
 
 class ProductsService {
   constructor (notify, pageManager, api) {
@@ -41,6 +42,48 @@ class ProductsService {
           resolve()
           this.$pageManager.showProducts()
           this._processSuccess()
+        })
+        .catch((e) => {
+          reject(e)
+          this._catchError(e)
+        })
+    })
+  }
+
+  createProductOption (form) {
+    return new Promise((resolve, reject) => {
+      this.$api.createProductOption(form)
+        .then(({ data }) => {
+          resolve(new ProductOption(data))
+          this._processSuccess()
+        })
+        .catch((e) => {
+          reject(e)
+          this._catchError(e)
+        })
+    })
+  }
+
+  updateProductOption (form) {
+    return new Promise((resolve, reject) => {
+      this.$api.updateProductOption(form)
+        .then(({ data }) => {
+          this._processSuccess()
+          resolve()
+        })
+        .catch((e) => {
+          reject(e)
+          this._catchError(e)
+        })
+    })
+  }
+
+  deleteProductOption (form) {
+    return new Promise((resolve, reject) => {
+      this.$api.deleteProductOption(form)
+        .then(({ data }) => {
+          this._processSuccess()
+          resolve()
         })
         .catch((e) => {
           reject(e)
