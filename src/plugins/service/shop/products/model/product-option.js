@@ -2,11 +2,14 @@ import ProductOptionAttribute from '@/plugins/service/shop/products/model/produc
 import Helper from '@/core/utils/helper'
 
 class ProductOption {
-  constructor ({ id, title, price, available, attributes }) {
+  constructor ({ id, title, price, available, priceOld, major, idXML, attributes }) {
     this.id = id
     this.title = title
     this.price = price
+    this.priceOld = priceOld
     this.available = available
+    this.major = major
+    this.idXML = idXML
     this.attributes = []
 
     if (Helper.isDefined(attributes) && Helper.isNotEmpty(attributes)) {

@@ -55,9 +55,9 @@ class ProductsApiService {
     })
   }
 
-  deleteProductOption (data) {
+  deleteProductOption (id) {
     return new Promise((resolve, reject) => {
-      this.$http.delete('products/options', data)
+      this.$http.delete(`products/options/${id}`)
         .then((data) => {
           resolve(data)
         })

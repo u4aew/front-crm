@@ -1,25 +1,32 @@
 import Helper from '@/core/utils/helper'
 import BaseContentItem from '@/views/base/content/base-content-item'
 
+const REQUIRED_PRODUCT_OPTIONS_PROPS = ['title', 'available', 'price', 'id', 'oldTitle', 'idXML', 'priceOld', 'major']
 export default {
   mixins: [BaseContentItem],
+  props: {
+    edit: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
-      price: null,
-      categories: [],
-      category: {},
-      brands: [],
       brand: {},
-      type: null,
-      types: [],
+      brands: [],
+      dialog: false,
+      category: {},
+      categories: [],
+      typeProduct: null,
+      typesProduct: [],
       productOptions: [],
       productOption: {},
-      typeProduct: null,
-      dialog: false,
-      optionEdit: null
+      productOptionEdit: null,
+      currentTypeProduct: null
     }
   },
   methods: {
+    // Установка информации из модели
     setData (model) {
       this.id = model.getId()
       this.slug = model.getSlug()
@@ -30,16 +37,15 @@ export default {
       this.metaTitle = model.getMetaTitle()
       this.metaKeywords = model.getMetaKeywords()
       this.metaDescription = model.getMetaDescription()
-      this.price = model.getPrice()
       this.category = { id: model.getCategory().getId(), name: model.getCategory().getName() }
       this.brand = { id: model.getBrand().getId(), name: model.getBrand().getName() }
-      this.type = { id: model.getType().getId(), name: model.getType().getName() }
+      this.currentTypeProduct = { id: model.getType().getId(), name: model.getType().getName() }
       this.productOptions = model.getProductOptions()
-      this.changeTypeProduct(this.type)
+      this.changeTypeProduct(this.currentTypeProduct)
     },
+    // Обновление продукта
     update (formData) {
       formData.append('id', this.id)
-      // todo нужно пересмотреть реализацию
       if (this.$refs.image) {
         if (!this.$refs.image.isDirty) {
           formData.append('removeImage', true)
@@ -47,95 +53,112 @@ export default {
       }
       this.$shop.products.updateProduct(formData)
     },
+    // Сохранение продукта
     save (formData) {
       this.$shop.products.createProduct(formData)
     },
+    // Отмена редактирования комплектации продукта
     cancelEditOption () {
       this.dialog = false
-      this.optionEdit = null
+      this.productOptionEdit = null
     },
+    // Показ диалога редактирование комплектации
     showEditProductOption (title) {
-      this.optionEdit = {}
+      this.productOptionEdit = {}
       const option = this.productOptions.find(item => item.title === title)
-      this.optionEdit.oldTitle = option.title
-      this.optionEdit.title = option.title
-      this.optionEdit.id = option.id
-      this.optionEdit.price = option.price
-      this.optionEdit.available = option.available
+      this.productOptionEdit.oldTitle = option.title
+      this.productOptionEdit.title = option.title
+      this.productOptionEdit.id = option.id
+      this.productOptionEdit.price = option.price
+      this.productOptionEdit.priceOld = option.priceOld
+      this.productOptionEdit.major = option.major
+      this.productOptionEdit.idXML = option.idXML
+      this.productOptionEdit.available = option.available
       option.attributes.forEach((item) => {
-        this.optionEdit[item.attributeId] = {
+        this.productOptionEdit[item.attributeId] = {
           value: item.value,
           id: item.id
         }
       })
       this.dialog = true
     },
+    // Изменение типа продукта
     async changeTypeProduct (value) {
       this.typeProduct = await this.$shop.typeProducts.getTypeProduct(value.id)
       this.productOption.title = null
       this.productOption.price = null
+      this.productOption.major = false
+      this.productOption.idXML = 0
+      this.productOption.priceOld = 0
       this.productOption.available = false
       this.typeProduct.getAttributes().forEach((item) => {
         this.productOption[item.getId()] = ''
       })
     },
+    // Нормализация контекста выпадающих списков
     normalizeOptionsRaw (value) {
       return value.split(/\n/)
     },
+    // Удаление комплектации продукта
     async removeProductOption (title) {
       const productOption = this.productOptions.find(item => item.title === title)
       try {
-        await this.$shop.products.deleteProductOption({ id: productOption.id })
+        await this.$shop.products.deleteProductOption(productOption.id)
         this.productOptions = this.productOptions.filter(item => item.title !== title)
       } catch (e) {
         // do noting
       }
     },
+    // Сохранение комплектации продукта
     async saveEditOption () {
       const result = {
         title: null,
-        price: null,
+        priceOld: 0,
+        idXMl: 0,
+        major: false,
         available: false,
         attributes: []
       }
-      for (let key in this.optionEdit) {
-        if (key === 'title' || key === 'available' || key === 'price' || key === 'id' || key === 'oldTitle') {
-          if (!Helper.isDefined(this.optionEdit[key])) {
+
+      for (let key in this.productOptionEdit) {
+        if (REQUIRED_PRODUCT_OPTIONS_PROPS.includes(key)) {
+          if (!Helper.isDefined(this.productOptionEdit[key])) {
             alert(`Поле ${key} не заполнено`)
             return
           }
           if (key === 'title') {
             if (Helper.isDefined(this.productOptions
-              .filter(item => item.title !== this.optionEdit.oldTitle)
-              .find(item => item.title === this.optionEdit[key].value))) {
+              .filter(item => item.title !== this.productOptionEdit.oldTitle)
+              .find(item => item.title === this.productOptionEdit[key].value))) {
               alert(`Такое название уже существует`)
               return
             }
           }
-          result[key] = this.optionEdit[key]
+          result[key] = this.productOptionEdit[key]
         } else {
-          if (this.edit) {
-            result.id = this.optionEdit.id
-            result.attributes.push({ attributeId: key, value: this.optionEdit[key].value, id: this.optionEdit[key].id })
-          } else {
-            result.attributes.push({ attributeId: key, value: this.optionEdit[key] })
-          }
+          result.id = this.productOptionEdit.id
+          result.attributes.push({
+            attributeId: key,
+            value: this.productOptionEdit[key].value,
+            id: this.productOptionEdit[key].id
+          })
         }
       }
       try {
-        if (this.edit) {
-          const productOption = result
-          productOption.attributes = JSON.stringify(productOption.attributes)
-          this.dialog = false
-          await this.$shop.products.updateProductOption(productOption)
-        }
-        const opt = this.productOptions.find(item => item.title === this.optionEdit.oldTitle)
+        const productOption = result
+        productOption.attributes = JSON.stringify(productOption.attributes)
+        await this.$shop.products.updateProductOption(productOption)
+        const opt = this.productOptions.find(item => item.title === this.productOptionEdit.oldTitle)
         opt.title = result.title
         opt.id = result.id
         opt.price = result.price
         opt.available = result.available
+        opt.priceOld = result.priceOld
+        opt.idXML = result.idXML
+        opt.major = result.major
         opt.attributes = JSON.parse(result.attributes)
-        this.optionEdit = null
+        this.productOptionEdit = null
+        this.dialog = false
       } catch (e) {
         // do noting
       }
@@ -144,11 +167,14 @@ export default {
       const result = {
         title: null,
         price: null,
+        priceOld: 0,
         available: false,
+        major: false,
+        idXML: 0,
         attributes: []
       }
       for (let key in this.productOption) {
-        if (key === 'title' || key === 'available' || key === 'price') {
+        if (REQUIRED_PRODUCT_OPTIONS_PROPS.includes(key)) {
           if (!Helper.isDefined(this.productOption[key])) {
             alert(`Поле ${key} не заполнено`)
             return
@@ -164,16 +190,11 @@ export default {
           result.attributes.push({ attributeId: key, value: this.productOption[key] })
         }
       }
-
       try {
-        if (this.edit) {
-          const productOption = { ...result, ...{ productId: this.id } }
-          productOption.attributes = JSON.stringify(productOption.attributes)
-          const productOptionModel = await this.$shop.products.createProductOption(productOption)
-          this.productOptions.push(productOptionModel)
-        } else {
-          this.productOptions.push(result)
-        }
+        const productOption = { ...result, ...{ productId: this.id } }
+        productOption.attributes = JSON.stringify(productOption.attributes)
+        const productOptionModel = await this.$shop.products.createProductOption(productOption)
+        this.productOptions.push(productOptionModel)
       } catch (e) {
         // to noting
       }
@@ -182,7 +203,7 @@ export default {
       const formData = new FormData(this.$refs.form)
       formData.append('category', this.category.id)
       formData.append('brand', this.brand.id)
-      formData.append('type', this.type.id)
+      formData.append('type', this.currentTypeProduct.id)
       if (this.edit) {
         this.update(formData)
       } else {
@@ -203,7 +224,7 @@ export default {
 
     const typesModel = await this.$shop.typeProducts.getTypeProducts()
     typesModel.getItems().forEach((item) => {
-      this.types.push({ id: item.getId(), name: item.getName() })
+      this.typesProduct.push({ id: item.getId(), name: item.getName() })
     })
 
     this.category = this.categories[0]

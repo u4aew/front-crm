@@ -4,7 +4,7 @@
       <v-col>
         <v-tabs class="pa-2">
           <v-tab>Базовая информация</v-tab>
-          <v-tab>Комплектации</v-tab>
+          <v-tab :disabled="!edit">Комплектации</v-tab>
           <v-tab-item>
             <form method="post" enctype="multipart/form-data" ref="form" @submit.prevent="submit">
               <v-container>
@@ -35,8 +35,8 @@
                     </template>
                     <v-select
                       @change="changeTypeProduct"
-                      v-model="type"
-                      :items="types"
+                      v-model="currentTypeProduct"
+                      :items="typesProduct"
                       item-text="name"
                       item-value="id"
                       label="Тип товара"
@@ -90,21 +90,34 @@
                     />
                   </v-col>
                   <v-col cols="6">
-                    <v-text-field
-                      v-model="metaTitle"
-                      name="metaTitle"
-                      label="SEO Заголовок"
-                    />
-                    <v-text-field
-                      v-model="metaKeywords"
-                      name="metaKeywords"
-                      label="SEO Ключевые слова"
-                    />
-                    <v-text-field
-                      v-model="metaDescription"
-                      name="metaDescription"
-                      label="SEO Описание"
-                    />
+                    <v-row>
+                      <v-col cols="12">
+                        <div class="headline">SEO Настройки</div>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="metaTitle"
+                          name="metaTitle"
+                          label="Заголовок"
+                        />
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="metaKeywords"
+                          name="metaKeywords"
+                          label="Ключевые слова"
+                        />
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="metaDescription"
+                          name="metaDescription"
+                          label="Описание"
+                        />
+                      </v-col>
+                    </v-row>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -116,10 +129,10 @@
               </v-container>
             </form>
           </v-tab-item>
-          <v-tab-item :disabled="optionEdit">
+          <v-tab-item>
             <v-container>
               <v-row>
-                <v-col cols="6">
+                <v-col cols="12">
                   <v-row v-if="typeProduct">
                     <v-dialog v-model="dialog" persistent max-width="600px">
                       <v-card>
@@ -128,19 +141,19 @@
                         </v-card-title>
                         <v-card-text>
                           <v-container>
-                            <v-row v-if="optionEdit">
+                            <v-row v-if="productOptionEdit">
                               <v-col cols="12">
                                 <v-text-field
                                   name="nameOptionEdit"
                                   required
-                                  v-model="optionEdit.title"
+                                  v-model="productOptionEdit.title"
                                   label="Название комплектации"
                                 />
                               </v-col>
                               <template v-for="(item, key) in typeProduct.getAttributes()">
                                 <v-col cols="12" :key="key" v-if="item.getTypeId() === 1">
                                   <v-text-field
-                                    v-model="optionEdit[item.getId()].value"
+                                    v-model="productOptionEdit[item.getId()].value"
                                     :name="`attribute ${item.getId()}`"
                                     :required="item.getRequired()"
                                     :label="item.getName()"
@@ -148,7 +161,7 @@
                                 </v-col>
                                 <v-col cols="12" :key="key" v-if="item.getTypeId() === 2">
                                   <v-select
-                                    v-model="optionEdit[item.getId()].value"
+                                    v-model="productOptionEdit[item.getId()].value"
                                     :name="`attribute ${item.getId()}`"
                                     :required="item.getRequired()"
                                     :label="item.getName()"
@@ -157,7 +170,7 @@
                                 </v-col>
                                 <v-col cols="12" :key="key" v-if="item.getTypeId() === 3">
                                   <v-checkbox
-                                    v-model="optionEdit[item.getId()].value"
+                                    v-model="productOptionEdit[item.getId()].value"
                                     :name="`attribute ${item.getId()}`"
                                     :required="item.getRequired()"
                                     :label="item.getName()"
@@ -167,7 +180,7 @@
                                   <v-row align="center">
                                     <v-col cols="10">
                                       <v-text-field
-                                        v-model="optionEdit[item.getId()].value"
+                                        v-model="productOptionEdit[item.getId()].value"
                                         :name="`attribute ${item.getId()}`"
                                         :required="item.getRequired()"
                                         :label="item.getName()"
@@ -179,40 +192,124 @@
                               </template>
                               <v-col cols="12">
                                 <v-text-field
+                                  name="idxmlEdit"
+                                  v-model="productOptionEdit.idXML"
+                                  hide-details
+                                  single-line
+                                  type="number"
+                                  label="idXML"
+                                />
+                              </v-col>
+                              <v-col cols="6">
+                                <v-text-field
                                   name="priceEdit"
-                                  required
-                                  v-model="optionEdit.price"
+                                  v-model="productOptionEdit.price"
+                                  hide-details
+                                  single-line
+                                  type="number"
                                   label="Цена"
                                 />
                               </v-col>
-                              <v-col cols="12">
-                                <v-checkbox
-                                  name="availableEdit"
-                                  v-model="optionEdit.available"
-                                  label="Наличие"
+                              <v-col cols="6">
+                                <v-text-field
+                                  name="priceOldEdit"
+                                  v-model="productOptionEdit.priceOld"
+                                  hide-details
+                                  single-line
+                                  type="number"
+                                  label="Старая цена"
                                 />
                               </v-col>
+                              <v-row>
+                                <v-col cols="3">
+                                  <v-checkbox
+                                    name="availableEdit"
+                                    v-model="productOptionEdit.available"
+                                    label="Наличие"
+                                  />
+                                </v-col>
+                                <v-col cols="8">
+                                  <v-checkbox
+                                    name="majorEdit"
+                                    v-model="productOptionEdit.major"
+                                    label="Главная комплектация"
+                                  />
+                                </v-col>
+                              </v-row>
+
                             </v-row>
                           </v-container>
                         </v-card-text>
-                        <v-card-actions>
+                        <v-card-actions class="pb-10">
                           <v-spacer></v-spacer>
                           <v-btn color="blue darken-1" text @click="cancelEditOption">Закрыть</v-btn>
-                          <v-btn color="blue darken-1" text @click="saveEditOption">Сохранить</v-btn>
+                          <v-btn color="blue darken-1" dark @click="saveEditOption">Сохранить</v-btn>
                         </v-card-actions>
                       </v-card>
                     </v-dialog>
-                    <v-col cols="12">
+                    <v-col cols="6">
+                      <v-row>
+                        <v-col cols="12">
+                          <div class="headline">Базовые характеристики</div>
+                        </v-col>
+                      </v-row>
+                      <v-text-field
+                        name="nameOption"
+                        v-model="productOption.title"
+                        label="Название комплектации"
+                      />
+                      <v-text-field
+                        name="price"
+                        v-model="productOption.price"
+                        hide-details
+                        single-line
+                        type="number"
+                        label="Цена"
+                      />
+                      <v-text-field
+                        name="price"
+                        v-model="productOption.priceOld"
+                        hide-details
+                        single-line
+                        type="number"
+                        label="Старая цена"
+                      />
+                      <v-text-field
+                        name="idxml"
+                        v-model="productOption.idXML"
+                        hide-details
+                        single-line
+                        type="number"
+                        label="idXML"
+                      />
+                      <v-row>
+                        <v-col cols="3">
+                          <v-checkbox
+                            name="available"
+                            v-model="productOption.available"
+                            label="Наличие"
+                          />
+                        </v-col>
+                        <v-col cols="8">
+                          <v-checkbox
+                            name="majorEdit"
+                            v-model="productOption.major"
+                            label="Главная комплектация"
+                          />
+                        </v-col>
+                      </v-row>
+                      <v-btn @click="addOption" color="primary" dark class="ma-1">Добавить комплектацию</v-btn>
+                    </v-col>
+                    <v-col cols="6">
                       <!-- 1 - Текст-->
                       <!-- 2 - Выпадающий список-->
                       <!-- 3 - Чебокс-->
                       <!-- 4 - Число-->
-                      <v-text-field
-                        name="nameOption"
-                        required
-                        v-model="productOption.title"
-                        label="Название комплектации"
-                      />
+                      <v-row>
+                        <v-col cols="12">
+                          <div class="headline">Атрибуты товара</div>
+                        </v-col>
+                      </v-row>
                       <template v-for="(item, key) in typeProduct.getAttributes()">
                         <div :key="key" v-if="item.getTypeId() === 1">
                           <v-text-field
@@ -253,21 +350,17 @@
                           </v-row>
                         </div>
                       </template>
-                      <v-text-field
-                        name="price"
-                        required
-                        v-model="productOption.price"
-                        label="Цена"
-                      />
-                      <v-checkbox
-                        name="available"
-                        v-model="productOption.available"
-                        label="Наличие"
-                      />
-                      <v-btn @click="addOption" color="primary" dark class="ma-1">Добавить комплектацию</v-btn>
                     </v-col>
                   </v-row>
                 </v-col>
+              </v-row>
+              <v-divider class="mb-10"/>
+              <v-row>
+                <v-col cols="12">
+                  <div class="headline">Сохраненные комплектации</div>
+                </v-col>
+              </v-row>
+              <v-row>
                 <v-col cols="6">
                   <template v-for="(option, key) in productOptions">
                     <v-row :key="key" align="center">
@@ -276,9 +369,10 @@
                       </v-col>
                       <v-col cols="6">
                         <v-row justify="end">
-                          <v-btn @click="removeProductOption(option.title)" small class="ma-1">Удалить</v-btn>
-                          <v-btn @click="showEditProductOption(option.title)" small color="primary" dark class="ma-1">Ред.
+                          <v-btn @click="showEditProductOption(option.title)" small color="primary" dark class="ma-1">
+                            Редактировать
                           </v-btn>
+                          <v-btn @click="removeProductOption(option.title)" small class="ma-1">Удалить</v-btn>
                         </v-row>
                       </v-col>
                     </v-row>
