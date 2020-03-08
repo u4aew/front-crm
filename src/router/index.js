@@ -22,6 +22,10 @@ import TypeProductsItem from '@/views/profile/shop/type-products/item/TypeProduc
 
 import Attributes from '@/views/profile/shop/attributes/Attributes'
 import AttributesItem from '@/views/profile/shop/attributes/item/AttributesItem'
+
+// Content
+import Pages from '@/views/profile/content/pages/Pages'
+import PagesItem from '@/views/profile/content/pages/item/PagesItem'
 // system
 import NotFound from '@/views/errors/not-found'
 
@@ -112,6 +116,22 @@ const router = new Router({
           path: 'attributes/:id',
           component: AttributesItem,
           name: VIEWS.profile.attributes.edit.name,
+          props: { edit: true }
+        },
+        {
+          path: 'pages',
+          component: Pages,
+          name: VIEWS.profile.pages.index.name
+        },
+        {
+          path: 'pages/create/',
+          component: PagesItem,
+          name: VIEWS.profile.pages.create.name
+        },
+        {
+          path: 'pages/:id',
+          component: Pages,
+          name: VIEWS.profile.pages.edit.name,
           props: { edit: true }
         }
       ]

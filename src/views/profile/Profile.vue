@@ -60,6 +60,22 @@
           </v-list-item>
 
         </v-list-group>
+        <v-list-group
+          prepend-icon="mdi-clipboard-multiple-outline"
+          value="true"
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>Контент</v-list-item-title>
+            </v-list-item-content>
+          </template>
+          <v-list-item to="/pages/">
+            <v-list-item-icon>
+              <v-icon>mdi-content-copy</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Страницы</v-list-item-title>
+          </v-list-item>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
     <v-app-bar
@@ -71,17 +87,17 @@
       <v-toolbar-title>Управление контентом</v-toolbar-title>
     </v-app-bar>
     <v-content>
-        <router-view/>
+      <router-view/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-  import ProfileController from './profile-controller'
-  // components
+    import ProfileController from './profile-controller'
+    // components
 
-  export default {
-    name: 'profile',
-    mixins: [ProfileController]
-  }
+    export default {
+        name: 'profile',
+        mixins: [ProfileController]
+    }
 </script>
