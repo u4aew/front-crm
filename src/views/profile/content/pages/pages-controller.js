@@ -32,8 +32,8 @@ export default {
   },
   async mounted () {
     try {
-      const categories = await this.$shop.categories.getCategories()
-      this.items = categories.getItems()
+      const pages = await this.$content.pages.getPages()
+      this.items = pages.getItems()
     } catch (e) {
       throw new Error(e)
     }

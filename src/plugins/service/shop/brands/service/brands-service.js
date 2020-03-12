@@ -1,5 +1,5 @@
-import ItemsBaseModel from '@/plugins/service/shop/base/model/items-base-model'
-import ItemsBaseExtendedModel from '@/plugins/service/shop/base/model/item-base-extended-model'
+import ItemsBaseModel from '@/plugins/service/base/model/items-base-model'
+import ItemsBaseExtendedModel from '@/plugins/service/base/model/item-base-extended-model'
 
 class BrandsService {
   constructor (notify, pageManager, api) {

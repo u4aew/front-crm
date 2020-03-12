@@ -16,12 +16,9 @@ class PagesApiService {
   }
 
   createPage (data) {
+    console.log(data)
     return new Promise((resolve, reject) => {
-      this.$http.post('pages', data, {
-        headers: {
-          'Content-Type': `multipart/form-data; boundary=${data._boundary}`
-        }
-      })
+      this.$http.post('pages', data)
         .then((data) => {
           resolve(data)
         })
@@ -33,11 +30,7 @@ class PagesApiService {
 
   updatePage (data) {
     return new Promise((resolve, reject) => {
-      this.$http.put('pages', data, {
-        headers: {
-          'Content-Type': `multipart/form-data; boundary=${data._boundary}`
-        }
-      })
+      this.$http.put('pages', data)
         .then((data) => {
           resolve(data)
         })

@@ -31,7 +31,7 @@ export default {
     const apiTypeProducts = new TypeProductsApiService(http)
     const apiAttributes = new AttributesApiService(http)
     const apiProducts = new ProductsApiService(http)
-    const apiPages = new PagesApiService()
+    const apiPages = new PagesApiService(http)
     Vue.prototype.$shop = {
       categories: new CategoriesService(notify, pageManager, apiCategories),
       brands: new BrandsService(notify, pageManager, apiBrands),

@@ -5,10 +5,10 @@ export default {
   data () {
     return {
       myHTML: '',
+      sid: '',
       parentCategory: {
         id: null, name: 'Не выбрано'
-      },
-      categories: [{ id: null, name: 'Не выбрано' }]
+      }
     }
   },
   methods: {
@@ -20,15 +20,20 @@ export default {
           formData.append('removeImage', true)
         }
       }
-      this.$shop.categories.updateCategory(formData)
+      this.$content.pages.updatePage(formData)
     },
     save (formData) {
-      this.$shop.categories.createCategory(formData)
+      this.$content.pages.createPage(formData)
     },
     submit () {
-      const formData = new FormData(this.$refs.form)
-      if (this.parentCategory.id) {
-        formData.append('parentId', this.parentCategory.id)
+      const formData = {
+        name: new FormData(this.$refs.form).get('name'),
+        slug: new FormData(this.$refs.form).get('slug'),
+        sid: new FormData(this.$refs.form).get('sid'),
+        metaTitle: new FormData(this.$refs.form).get('metaTitle'),
+        metaKeywords: new FormData(this.$refs.form).get('metaKeywords'),
+        metaDescription: new FormData(this.$refs.form).get('metaDescription'),
+        content: this.myHTML
       }
       if (this.edit) {
         this.update(formData)
@@ -39,15 +44,9 @@ export default {
   },
   async beforeMount () {
     if (this.edit) {
-      const categoryModel = await this.$shop.categories.getCategory(this.$route.params.id)
-      this.setData(categoryModel)
-      this.parentCategory = { id: categoryModel.getParentId(), name: categoryModel.getName() }
+      // const categoryModel = await this.$shop.categories.getCategory(this.$route.params.id)
+      // this.setData(categoryModel)
+      // this.parentCategory = { id: categoryModel.getParentId(), name: categoryModel.getName() }
     }
-    const categoriesModel = await this.$shop.categories.getCategories()
-    categoriesModel.getItems().forEach((item) => {
-      if (item.getId() !== this.id) {
-        this.categories.push({ id: item.getId(), name: item.getName() })
-      }
-    })
   }
 }

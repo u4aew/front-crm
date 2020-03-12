@@ -1,4 +1,4 @@
-import ItemBaseModel from '@/plugins/service/shop/base/model/item-base-model'
+import ItemBaseModel from '@/plugins/service/base/model/item-base-model'
 import AttributeModel from '@/plugins/service/shop/attributes/model/attribute-model'
 import Helper from '@/core/utils/helper'
 

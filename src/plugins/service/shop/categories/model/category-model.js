@@ -1,4 +1,4 @@
-import ItemBaseExtendedModel from '@/plugins/service/shop/base/model/item-base-extended-model'
+import ItemBaseExtendedModel from '@/plugins/service/base/model/item-base-extended-model'
 
 import Helper from '@/core/utils/helper'
 

@@ -25,6 +25,12 @@
                       required
                       label="Алиас"
                     />
+                    <v-text-field
+                      :value="sid"
+                      name="sid"
+                      required
+                      label="sid"
+                    />
                   </v-col>
                 </v-row>
                 <v-row>

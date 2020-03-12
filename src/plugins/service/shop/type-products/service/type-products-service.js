@@ -1,4 +1,4 @@
-import ItemsBaseModel from '@/plugins/service/shop/base/model/items-base-model'
+import ItemsBaseModel from '@/plugins/service/base/model/items-base-model'
 import TypeProduct from '@/plugins/service/shop/type-products/model/type-product'
 
 class TypeProductsService {

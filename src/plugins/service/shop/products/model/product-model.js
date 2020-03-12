@@ -1,5 +1,5 @@
-import ItemBaseModel from '@/plugins/service/shop/base/model/item-base-model'
-import ItemBaseExtendedModel from '@/plugins/service/shop/base/model/item-base-extended-model'
+import ItemBaseModel from '@/plugins/service/base/model/item-base-model'
+import ItemBaseExtendedModel from '@/plugins/service/base/model/item-base-extended-model'
 import CategoryModel from '@/plugins/service/shop/categories/model/category-model'
 import ProductOption from '@/plugins/service/shop/products/model/product-option'
 import Helper from '@/core/utils/helper'

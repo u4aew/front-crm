@@ -1,5 +1,5 @@
 import Helper from '@/core/utils/helper'
-import ItemBaseModel from '@/plugins/service/shop/base/model/item-base-model'
+import ItemBaseModel from '@/plugins/service/base/model/item-base-model'
 
 class ItemsBaseModel {
   constructor (items) {
